@@ -18,7 +18,7 @@ public class DasheryClothingQueryApplication {
     @Value("${spring.data.mongodb.uri}")
     String name = "World";
 
-    @RequestMapping("/")
+    @RequestMapping("/check")
     public String home() {
        return "Hello " + name;
     }
