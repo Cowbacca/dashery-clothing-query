@@ -1,9 +1,0 @@
-spring:
-  application:
-    name: dashery-clothing-query
-  cloud:
-    config:
-      profiles: mongodb
-      uri: http://dashery-config-server.herokuapp.com/
-      user: user
-      password: test
