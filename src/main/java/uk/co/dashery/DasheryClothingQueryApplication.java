@@ -15,7 +15,7 @@ public class DasheryClothingQueryApplication {
 
 
 
-    @Value("${spring.data.mongodb.uri}")
+    @Value("${spring.cloud.config.uri}")
     String name = "World";
 
     @RequestMapping("/check")
