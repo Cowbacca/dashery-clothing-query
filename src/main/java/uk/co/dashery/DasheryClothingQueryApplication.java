@@ -8,22 +8,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Configuration
-@EnableAutoConfiguration
-@RestController
+@SpringBootApplication
 public class DasheryClothingQueryApplication {
-
-
-
-    @Value("${spring.cloud.config.uri}")
-    String name = "World";
-
-    @RequestMapping("/check")
-    public String home() {
-       return "Hello " + name;
-    }
 
     public static void main(String[] args) {
         SpringApplication.run(DasheryClothingQueryApplication.class, args);
     }
+
 }
