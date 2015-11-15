@@ -8,5 +8,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import java.util.List;
 
 public interface ClothingRepository extends MongoRepository<Clothing, String> {
-    List<Clothing> findByName(@Param("name") String name);
+    List<Clothing> findByType(@Param("type") String type);
 }
