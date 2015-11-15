@@ -8,8 +8,18 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@SpringBootApplication
+@Configuration
+@EnableAutoConfiguration
+@RestController
 public class DasheryClothingQueryApplication {
+
+    @Value("${spring.data.mongodb.uri}")
+    String name = "World";
+
+    @RequestMapping("/")
+    public String home() {
+        return "Hello " + name;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(DasheryClothingQueryApplication.class, args);

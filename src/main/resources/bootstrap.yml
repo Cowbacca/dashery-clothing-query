@@ -1,8 +1,8 @@
 spring:
   cloud:
     config:
-      uri: http://dashery-config-server.herokuapp.com/
+      uri: http://dashery-config-server.herokuapp.com
       username: user
       password: test
-      name: dashery-clothing-store
+      name: dashery-clothing-query
       profile: mongodb
