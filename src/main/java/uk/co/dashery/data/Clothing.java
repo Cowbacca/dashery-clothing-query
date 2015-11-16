@@ -9,7 +9,8 @@ public class Clothing {
     private String id;
     public String brand;
     public String name;
-    public String price;
+    public int price;
+    public String link;
     public String type;
     public String colour;
     public String material;
