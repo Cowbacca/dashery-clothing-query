@@ -1,4 +1,4 @@
-package uk.co.dashery;
+package uk.co.dashery.data;
 
 
 import org.springframework.data.annotation.Id;

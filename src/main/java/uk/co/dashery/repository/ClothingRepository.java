@@ -1,12 +1,13 @@
-package uk.co.dashery;
+package uk.co.dashery.repository;
 
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import uk.co.dashery.data.Clothing;
 
 import java.util.List;
 
-public interface ClothingRepository extends MongoRepository<Clothing, String> {
+public interface ClothingRepository extends MongoRepository<Clothing, String>, ClothingRepositoryCustom {
     List<Clothing> findByType(@Param("type") String type);
+
 }
