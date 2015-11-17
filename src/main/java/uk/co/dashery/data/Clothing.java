@@ -11,6 +11,7 @@ public class Clothing {
     public String name;
     public int price;
     public String link;
+    public String imageLink;
     public String type;
     public String colour;
     public String material;
