@@ -23,6 +23,6 @@ public class ClothingService {
 
     public void create(List<Clothing> clothing) {
         clothingRepository.insert(clothing);
-        tokenService.create(clothing);
+        tokenService.createFromClothing(clothing);
     }
 }
