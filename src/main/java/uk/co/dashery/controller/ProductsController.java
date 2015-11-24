@@ -33,7 +33,7 @@ public class ProductsController {
     @RequestMapping(value = "/products", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public void ingestProductsFromUrl(@ModelAttribute Products products) throws IOException {
-        List<Clothing> productBeans = productCsvParser.parseFromUrl(products.getUrl());
-        clothingService.create(productBeans);
+        List<Clothing> clothing = productCsvParser.parseFromUrl(products.getUrl());
+        clothingService.create(clothing);
     }
 }
