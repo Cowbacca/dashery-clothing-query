@@ -44,7 +44,16 @@ public class ClothingServiceTest {
         when(mockClothingRepository.findByQuery(mockQuery)).thenReturn(clothing);
 
         assertThat(clothingService.search(SEARCH_STRING), is(clothing));
+    }
 
-        verify(tokenService).create(clothing);
+    @Test
+    public void testCreate() {
+        List<Clothing> clothing = createClothing();
+
+        clothingService.create(clothing);
+
+        verify(mockClothingRepository).insert(clothing);
+        verify(tokenService).createFromClothing(clothing);
+
     }
 }
