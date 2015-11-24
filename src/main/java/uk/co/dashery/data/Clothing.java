@@ -1,22 +1,31 @@
 package uk.co.dashery.data;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.univocity.parsers.annotations.Parsed;
 import org.springframework.data.annotation.Id;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Clothing {
 
     @Id
+    @JsonIgnore
     private String id;
     @Parsed
+    @JsonIgnore
     public String brand;
     @Parsed
+    @JsonIgnore
     public String name;
+    @JsonIgnore
     @Parsed
     public int price;
     @Parsed
+    @JsonIgnore
     public String link;
     @Parsed
+    @JsonIgnore
     public String imageLink;
     @Parsed
     public String type;

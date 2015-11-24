@@ -14,6 +14,8 @@ public class ClothingService {
     private ClothingRepository clothingRepository;
     @Autowired
     private QueryGenerator queryGenerator;
+    @Autowired
+    private TokenService tokenService;
 
     public List<Clothing> search(String search) {
         return clothingRepository.findByQuery(queryGenerator.generate(search));
@@ -21,5 +23,6 @@ public class ClothingService {
 
     public void create(List<Clothing> clothing) {
         clothingRepository.insert(clothing);
+        tokenService.create(clothing);
     }
 }
