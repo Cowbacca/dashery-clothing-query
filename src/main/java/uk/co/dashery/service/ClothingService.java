@@ -18,4 +18,8 @@ public class ClothingService {
     public List<Clothing> search(String search) {
         return clothingRepository.findByQuery(queryGenerator.generate(search));
     }
+
+    public void create(List<Clothing> clothing) {
+        clothingRepository.insert(clothing);
+    }
 }
