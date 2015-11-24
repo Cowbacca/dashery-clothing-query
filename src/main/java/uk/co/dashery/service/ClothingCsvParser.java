@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.List;
 
 @Component
-public class ProductCsvParser {
+public class ClothingCsvParser {
     public List<Clothing> parseFromUrl(String url) throws IOException {
         BeanListProcessor<Clothing> rowProcessor = new BeanListProcessor<>(Clothing.class);
 

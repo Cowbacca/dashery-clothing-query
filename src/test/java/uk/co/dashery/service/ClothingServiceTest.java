@@ -12,6 +12,7 @@ import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static uk.co.dashery.ClothingTestUtils.createClothing;
@@ -28,6 +29,8 @@ public class ClothingServiceTest {
     private Query mockQuery;
     @Mock
     private QueryGenerator mockQueryGenerator;
+    @Mock
+    private TokenService tokenService;
 
     @Before
     public void setUp() throws Exception {
@@ -41,5 +44,16 @@ public class ClothingServiceTest {
         when(mockClothingRepository.findByQuery(mockQuery)).thenReturn(clothing);
 
         assertThat(clothingService.search(SEARCH_STRING), is(clothing));
+    }
+
+    @Test
+    public void testCreate() {
+        List<Clothing> clothing = createClothing();
+
+        clothingService.create(clothing);
+
+        verify(mockClothingRepository).insert(clothing);
+        verify(tokenService).createFromClothing(clothing);
+
     }
 }
