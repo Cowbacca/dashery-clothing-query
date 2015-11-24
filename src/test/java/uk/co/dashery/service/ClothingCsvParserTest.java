@@ -11,20 +11,20 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static uk.co.dashery.ClothingTestUtils.createClothing;
 
-public class ProductCsvParserTest {
+public class ClothingCsvParserTest {
 
-    private ProductCsvParser productCsvParser;
+    private ClothingCsvParser clothingCsvParser;
 
     @Before
     public void setUp() throws Exception {
-        productCsvParser = new ProductCsvParser();
+        clothingCsvParser = new ClothingCsvParser();
     }
 
     @Test
     public void testParseFromUrl() throws Exception {
         URL resource = getClass().getClassLoader().getResource("test.csv");
 
-        List<Clothing> products = productCsvParser.parseFromUrl(resource.toString());
+        List<Clothing> products = clothingCsvParser.parseFromUrl(resource.toString());
 
         List<Clothing> expectedProducts = createClothing();
         assertThat(products, is(expectedProducts));

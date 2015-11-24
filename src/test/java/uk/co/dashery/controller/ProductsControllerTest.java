@@ -6,8 +6,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import uk.co.dashery.data.Clothing;
 import uk.co.dashery.data.Products;
+import uk.co.dashery.service.ClothingCsvParser;
 import uk.co.dashery.service.ClothingService;
-import uk.co.dashery.service.ProductCsvParser;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class ProductsControllerTest {
     private ProductsController productsController;
 
     @Mock
-    private ProductCsvParser productCsvParser;
+    private ClothingCsvParser clothingCsvParser;
     @Mock
     private ClothingService clothingService;
 
@@ -35,7 +35,7 @@ public class ProductsControllerTest {
     @Test
     public void testIngestProductsFromURL() throws Exception {
         List<Clothing> clothing = createClothing();
-        when(productCsvParser.parseFromUrl(URL)).thenReturn(clothing);
+        when(clothingCsvParser.parseFromUrl(URL)).thenReturn(clothing);
 
         productsController.ingestProductsFromUrl(new Products(URL));
 

@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import uk.co.dashery.data.Clothing;
 import uk.co.dashery.data.Products;
+import uk.co.dashery.service.ClothingCsvParser;
 import uk.co.dashery.service.ClothingService;
-import uk.co.dashery.service.ProductCsvParser;
 
 import java.io.IOException;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
 public class ProductsController {
 
     @Autowired
-    private ProductCsvParser productCsvParser;
+    private ClothingCsvParser clothingCsvParser;
     @Autowired
     private ClothingService clothingService;
 
@@ -33,7 +33,7 @@ public class ProductsController {
     @RequestMapping(value = "/products", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public void ingestProductsFromUrl(@ModelAttribute Products products) throws IOException {
-        List<Clothing> clothing = productCsvParser.parseFromUrl(products.getUrl());
+        List<Clothing> clothing = clothingCsvParser.parseFromUrl(products.getUrl());
         clothingService.create(clothing);
     }
 }
