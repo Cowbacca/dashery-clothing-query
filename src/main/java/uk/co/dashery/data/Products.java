@@ -46,4 +46,25 @@ public class Products {
     public void setFile(MultipartFile file) {
         this.file = file;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Products products = (Products) o;
+
+        if (usingUrl != products.usingUrl) return false;
+        if (url != null ? !url.equals(products.url) : products.url != null) return false;
+        return !(file != null ? !file.equals(products.file) : products.file != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (usingUrl ? 1 : 0);
+        result = 31 * result + (url != null ? url.hashCode() : 0);
+        result = 31 * result + (file != null ? file.hashCode() : 0);
+        return result;
+    }
 }

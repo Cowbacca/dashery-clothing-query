@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.ui.ExtendedModelMap;
 import uk.co.dashery.data.Clothing;
 import uk.co.dashery.data.Products;
 import uk.co.dashery.service.ClothingCsvParser;
@@ -15,6 +16,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static uk.co.dashery.ClothingTestUtils.createClothing;
@@ -61,5 +64,13 @@ public class ProductsControllerTest {
     private MockMultipartFile generateCsvFile() throws IOException {
         InputStream inputFile = getTestCsvAsStream();
         return new MockMultipartFile("csvFile", "test.csv", "multipart/form-data", inputFile);
+    }
+
+    @Test
+    public void testProductsForm() {
+        ExtendedModelMap model = new ExtendedModelMap();
+        productsController.productsForm(model);
+
+        assertThat(model.containsValue(new Products()), is(true));
     }
 }
