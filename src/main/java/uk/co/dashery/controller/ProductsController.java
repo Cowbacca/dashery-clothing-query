@@ -13,10 +13,7 @@ import uk.co.dashery.data.Products;
 import uk.co.dashery.service.ClothingCsvParser;
 import uk.co.dashery.service.ClothingService;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.net.URL;
 import java.util.List;
 
@@ -36,13 +33,19 @@ public class ProductsController {
 
     @RequestMapping(value = "/products", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
-    public void ingestProductsFromUrl(@ModelAttribute Products products) throws IOException {
-        List<Clothing> clothing = clothingCsvParser.parse(generateReader(products.getUrl()));
+    public void ingestProducts(@ModelAttribute Products products) throws IOException {
+        Reader csvReader = generateReader(products);
+        List<Clothing> clothing = clothingCsvParser.parse(csvReader);
         clothingService.create(clothing);
     }
 
-    private Reader generateReader(String urlString) throws IOException {
-        URL url = new URL(urlString);
-        return new BufferedReader(new InputStreamReader(url.openStream()));
+    private Reader generateReader(Products products) throws IOException {
+        InputStream csvInputStream;
+        if (products.isUsingUrl()) {
+            csvInputStream = new URL(products.getUrl()).openStream();
+        } else {
+            csvInputStream = products.getFile().getInputStream();
+        }
+        return new BufferedReader(new InputStreamReader(csvInputStream));
     }
 }
