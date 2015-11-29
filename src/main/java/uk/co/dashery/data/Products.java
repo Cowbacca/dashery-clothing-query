@@ -1,6 +1,7 @@
 package uk.co.dashery.data;
 
 public class Products {
+
     private String url;
 
     public Products() {

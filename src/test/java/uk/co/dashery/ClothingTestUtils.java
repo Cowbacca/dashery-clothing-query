@@ -2,6 +2,7 @@ package uk.co.dashery;
 
 import uk.co.dashery.data.Clothing;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,5 +21,9 @@ public class ClothingTestUtils {
         clothing.name = name;
         clothing.price = price;
         return clothing;
+    }
+
+    public static InputStream getTestCsvAsStream() {
+        return ClothingTestUtils.class.getClassLoader().getResourceAsStream("test.csv");
     }
 }
