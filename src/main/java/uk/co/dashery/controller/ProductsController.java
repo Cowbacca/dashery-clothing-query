@@ -26,7 +26,7 @@ public class ProductsController {
     private ClothingService clothingService;
 
     @RequestMapping(value = "/products", method = RequestMethod.GET)
-    public String ingestUrlForm(Model model) {
+    public String productsForm(Model model) {
         model.addAttribute("products", new Products());
         return "products";
     }
