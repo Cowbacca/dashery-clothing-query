@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import uk.co.dashery.data.Clothing;
 import uk.co.dashery.data.Products;
 import uk.co.dashery.service.ClothingCsvParser;
@@ -12,7 +13,6 @@ import uk.co.dashery.service.ClothingService;
 import java.util.List;
 
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static uk.co.dashery.ClothingTestUtils.createClothing;
 
@@ -22,8 +22,8 @@ public class ProductsControllerTest {
     @InjectMocks
     private ProductsController productsController;
 
-    @Mock
-    private ClothingCsvParser clothingCsvParser;
+    @Spy
+    private ClothingCsvParser clothingCsvParser = new ClothingCsvParser();
     @Mock
     private ClothingService clothingService;
 
@@ -35,10 +35,13 @@ public class ProductsControllerTest {
     @Test
     public void testIngestProductsFromURL() throws Exception {
         List<Clothing> clothing = createClothing();
-        when(clothingCsvParser.parseFromUrl(URL)).thenReturn(clothing);
 
-        productsController.ingestProductsFromUrl(new Products(URL));
+        productsController.ingestProductsFromUrl(new Products(testCsvUrl()));
 
         verify(clothingService).create(clothing);
+    }
+
+    private String testCsvUrl() {
+        return getClass().getClassLoader().getResource("test.csv").toString();
     }
 }

@@ -6,21 +6,18 @@ import com.univocity.parsers.csv.CsvParserSettings;
 import org.springframework.stereotype.Component;
 import uk.co.dashery.data.Clothing;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.URL;
 import java.util.List;
 
 @Component
 public class ClothingCsvParser {
-    public List<Clothing> parseFromUrl(String url) throws IOException {
+    public List<Clothing> parse(Reader csvReader) throws IOException {
         BeanListProcessor<Clothing> rowProcessor = new BeanListProcessor<>(Clothing.class);
 
         CsvParser parser = createCsvParser(rowProcessor);
 
-        parser.parse(createReader(url));
+        parser.parse(csvReader);
 
         return rowProcessor.getBeans();
     }
@@ -38,8 +35,5 @@ public class ClothingCsvParser {
         return parserSettings;
     }
 
-    private Reader createReader(String urlString) throws IOException {
-        URL url = new URL(urlString);
-        return new BufferedReader(new InputStreamReader(url.openStream()));
-    }
+
 }

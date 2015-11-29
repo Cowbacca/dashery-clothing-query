@@ -4,12 +4,13 @@ import org.junit.Before;
 import org.junit.Test;
 import uk.co.dashery.data.Clothing;
 
-import java.net.URL;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static uk.co.dashery.ClothingTestUtils.createClothing;
+import static uk.co.dashery.ClothingTestUtils.getTestCsvAsStream;
 
 public class ClothingCsvParserTest {
 
@@ -21,10 +22,10 @@ public class ClothingCsvParserTest {
     }
 
     @Test
-    public void testParseFromUrl() throws Exception {
-        URL resource = getClass().getClassLoader().getResource("test.csv");
+    public void testParse() throws Exception {
+        InputStreamReader resource = new InputStreamReader(getTestCsvAsStream());
 
-        List<Clothing> products = clothingCsvParser.parseFromUrl(resource.toString());
+        List<Clothing> products = clothingCsvParser.parse(resource);
 
         List<Clothing> expectedProducts = createClothing();
         assertThat(products, is(expectedProducts));
