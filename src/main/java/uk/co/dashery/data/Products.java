@@ -23,6 +23,14 @@ public class Products {
         this.file = file;
     }
 
+    public boolean isUsingUrl() {
+        return usingUrl;
+    }
+
+    public void setUsingUrl(boolean usingUrl) {
+        this.usingUrl = usingUrl;
+    }
+
     public String getUrl() {
         return url;
     }
@@ -31,11 +39,11 @@ public class Products {
         this.url = url;
     }
 
-    public boolean isUsingUrl() {
-        return usingUrl;
-    }
-
     public MultipartFile getFile() {
         return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
 }
