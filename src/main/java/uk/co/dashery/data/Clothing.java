@@ -3,8 +3,12 @@ package uk.co.dashery.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.univocity.parsers.annotations.Convert;
 import com.univocity.parsers.annotations.Parsed;
 import org.springframework.data.annotation.Id;
+import uk.co.dashery.service.WordsToSetConversion;
+
+import java.util.Set;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Clothing {
@@ -27,15 +31,6 @@ public class Clothing {
     @Parsed
     @JsonIgnore
     public String imageLink;
-    @Parsed
-    public String type;
-    @Parsed
-    public String colour;
-    @Parsed
-    public String material;
-    @Parsed
-    public String origin;
-
 
     @Override
     public boolean equals(Object o) {
@@ -50,10 +45,7 @@ public class Clothing {
         if (name != null ? !name.equals(clothing.name) : clothing.name != null) return false;
         if (link != null ? !link.equals(clothing.link) : clothing.link != null) return false;
         if (imageLink != null ? !imageLink.equals(clothing.imageLink) : clothing.imageLink != null) return false;
-        if (type != null ? !type.equals(clothing.type) : clothing.type != null) return false;
-        if (colour != null ? !colour.equals(clothing.colour) : clothing.colour != null) return false;
-        if (material != null ? !material.equals(clothing.material) : clothing.material != null) return false;
-        return !(origin != null ? !origin.equals(clothing.origin) : clothing.origin != null);
+        return !(tags != null ? !tags.equals(clothing.tags) : clothing.tags != null);
 
     }
 
@@ -65,10 +57,26 @@ public class Clothing {
         result = 31 * result + price;
         result = 31 * result + (link != null ? link.hashCode() : 0);
         result = 31 * result + (imageLink != null ? imageLink.hashCode() : 0);
-        result = 31 * result + (type != null ? type.hashCode() : 0);
-        result = 31 * result + (colour != null ? colour.hashCode() : 0);
-        result = 31 * result + (material != null ? material.hashCode() : 0);
-        result = 31 * result + (origin != null ? origin.hashCode() : 0);
+        result = 31 * result + (tags != null ? tags.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Clothing{" +
+                "id='" + id + '\'' +
+                ", brand='" + brand + '\'' +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", link='" + link + '\'' +
+                ", imageLink='" + imageLink + '\'' +
+                ", tags=" + tags +
+                '}';
+    }
+
+    @Parsed
+    @Convert(conversionClass = WordsToSetConversion.class, args = {";"})
+    public Set<String> tags;
+
+
 }
