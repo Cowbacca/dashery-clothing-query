@@ -31,6 +31,9 @@ public class Clothing {
     @Parsed
     @JsonIgnore
     public String imageLink;
+    @Parsed
+    @Convert(conversionClass = WordsToSetConversion.class, args = {";"})
+    public Set<String> tags;
 
     @Override
     public boolean equals(Object o) {
@@ -73,10 +76,4 @@ public class Clothing {
                 ", tags=" + tags +
                 '}';
     }
-
-    @Parsed
-    @Convert(conversionClass = WordsToSetConversion.class, args = {";"})
-    public Set<String> tags;
-
-
 }
