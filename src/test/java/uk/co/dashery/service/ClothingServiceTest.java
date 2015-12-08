@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.data.mongodb.core.query.Query;
 import uk.co.dashery.data.Clothing;
 import uk.co.dashery.repository.ClothingRepository;
 
@@ -19,16 +18,13 @@ import static uk.co.dashery.ClothingTestUtils.createClothing;
 
 public class ClothingServiceTest {
 
-    public static final String SEARCH_STRING = "test:test";
+    public static final String A_TAG = "test";
+    public static final String ANOTHER_TAG = "another";
     @InjectMocks
     private ClothingService clothingService;
 
     @Mock
     private ClothingRepository mockClothingRepository;
-    @Mock
-    private Query mockQuery;
-    @Mock
-    private QueryGenerator mockQueryGenerator;
     @Mock
     private TokenService tokenService;
 
@@ -40,10 +36,11 @@ public class ClothingServiceTest {
     @Test
     public void testSearch() throws Exception {
         List<Clothing> clothing = createClothing();
-        when(mockQueryGenerator.generate(SEARCH_STRING)).thenReturn(mockQuery);
-        when(mockClothingRepository.findByQuery(mockQuery)).thenReturn(clothing);
 
-        assertThat(clothingService.search(SEARCH_STRING), is(clothing));
+        when(mockClothingRepository.findByAllTagsIn(A_TAG, ANOTHER_TAG)).thenReturn(clothing);
+
+        String searchString = String.join(ClothingService.SEPARATOR, A_TAG, ANOTHER_TAG);
+        assertThat(clothingService.search(searchString), is(clothing));
     }
 
     @Test

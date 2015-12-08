@@ -2,6 +2,7 @@ package uk.co.dashery.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import uk.co.dashery.data.Clothing;
 
@@ -12,7 +13,9 @@ public class ClothingRepositoryImpl implements ClothingRepositoryCustom {
     private MongoOperations mongoOperations;
 
     @Override
-    public List<Clothing> findByQuery(Query query) {
+    public List<Clothing> findByAllTagsIn(String... tags) {
+        Criteria whereAllOfTheGivenTags = new Criteria("tags").all(tags);
+        Query query = new Query(whereAllOfTheGivenTags);
         return mongoOperations.find(query, Clothing.class);
     }
 }

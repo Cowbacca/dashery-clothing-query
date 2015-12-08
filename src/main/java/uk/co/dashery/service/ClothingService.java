@@ -10,15 +10,15 @@ import java.util.List;
 @Service
 public class ClothingService {
 
+    public static final String SEPARATOR = ",";
     @Autowired
     private ClothingRepository clothingRepository;
-    @Autowired
-    private QueryGenerator queryGenerator;
     @Autowired
     private TokenService tokenService;
 
     public List<Clothing> search(String search) {
-        return clothingRepository.findByQuery(queryGenerator.generate(search));
+        String[] tags = search.split(SEPARATOR);
+        return clothingRepository.findByAllTagsIn(tags);
     }
 
     public void create(List<Clothing> clothing) {

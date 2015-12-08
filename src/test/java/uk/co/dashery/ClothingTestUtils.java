@@ -16,7 +16,7 @@ public class ClothingTestUtils {
         return clothing;
     }
 
-    private static Clothing generateClothing(String brand, String name, int price, String... tags) {
+    public static Clothing generateClothing(String brand, String name, int price, String... tags) {
         Clothing clothing = new Clothing();
         clothing.brand = brand;
         clothing.name = name;
