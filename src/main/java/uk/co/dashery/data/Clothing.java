@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.univocity.parsers.annotations.Convert;
 import com.univocity.parsers.annotations.Parsed;
 import org.springframework.data.annotation.Id;
-import uk.co.dashery.service.WordsToSetConversion;
+import uk.co.dashery.service.DelimitedStringToSetConversion;
 
 import java.util.Set;
 
@@ -32,7 +32,7 @@ public class Clothing {
     @JsonIgnore
     public String imageLink;
     @Parsed
-    @Convert(conversionClass = WordsToSetConversion.class, args = {";"})
+    @Convert(conversionClass = DelimitedStringToSetConversion.class, args = {";"})
     public Set<String> tags;
 
     @Override

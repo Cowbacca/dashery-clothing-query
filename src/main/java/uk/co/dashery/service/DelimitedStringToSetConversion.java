@@ -8,13 +8,13 @@ import java.util.Set;
 /**
  * Modified from https://github.com/uniVocity/univocity-parsers
  */
-public class WordsToSetConversion implements Conversion<String, Set<String>> {
+public class DelimitedStringToSetConversion implements Conversion<String, Set<String>> {
 
     public static final String DEFAULT_SEPARATOR = ",";
 
     private final String separator;
 
-    public WordsToSetConversion(String... args) {
+    public DelimitedStringToSetConversion(String... args) {
         String separator = DEFAULT_SEPARATOR;
 
         if (args.length >= 1) {
