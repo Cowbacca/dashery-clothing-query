@@ -1,12 +1,9 @@
-package uk.co.dashery.service;
+package uk.co.dashery.clothing;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import uk.co.dashery.clothing.Clothing;
-import uk.co.dashery.clothing.ClothingRepository;
-import uk.co.dashery.clothing.ClothingService;
 import uk.co.dashery.token.TokenService;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package uk.co.dashery.controller;
+package uk.co.dashery.clothing;
 
 import com.google.common.collect.Lists;
 import org.junit.After;
@@ -11,9 +11,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.co.dashery.TestDasheryClothingQueryApplication;
-import uk.co.dashery.clothing.ClothingController;
-import uk.co.dashery.clothing.Clothing;
-import uk.co.dashery.clothing.ClothingRepository;
 
 import java.util.List;
 

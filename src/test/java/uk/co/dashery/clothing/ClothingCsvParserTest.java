@@ -1,9 +1,7 @@
-package uk.co.dashery.service;
+package uk.co.dashery.clothing;
 
 import org.junit.Before;
 import org.junit.Test;
-import uk.co.dashery.clothing.Clothing;
-import uk.co.dashery.clothing.ClothingCsvParser;
 
 import java.io.InputStreamReader;
 import java.util.List;

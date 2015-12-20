@@ -1,9 +1,8 @@
-package uk.co.dashery.service;
+package uk.co.dashery.conversion;
 
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
-import uk.co.dashery.conversion.DelimitedStringToSetConversion;
 
 import java.util.Set;
 
