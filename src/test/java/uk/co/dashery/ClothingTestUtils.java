@@ -1,8 +1,10 @@
 package uk.co.dashery;
 
 import com.google.common.collect.Sets;
+import org.springframework.mock.web.MockMultipartFile;
 import uk.co.dashery.clothing.Clothing;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,12 @@ public class ClothingTestUtils {
         return clothing;
     }
 
-    public static InputStream getTestCsvAsStream() {
-        return ClothingTestUtils.class.getClassLoader().getResourceAsStream("test.csv");
+    public static InputStream getTestCsvAsStream(String filename) {
+        return ClothingTestUtils.class.getClassLoader().getResourceAsStream(filename);
+    }
+
+    public static MockMultipartFile generateCsvFile(String filename) throws IOException {
+        InputStream inputFile = getTestCsvAsStream(filename);
+        return new MockMultipartFile("csvFile", filename, "multipart/form-data", inputFile);
     }
 }

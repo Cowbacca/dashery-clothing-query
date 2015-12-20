@@ -2,13 +2,17 @@ package uk.co.dashery.products;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.*;
+import java.net.URL;
+
 public class Products {
 
     private boolean usingUrl;
-
     private String url;
 
     private MultipartFile file;
+
+    private boolean isAffiliateWindowFormat;
 
     public Products() {
     }
@@ -21,6 +25,11 @@ public class Products {
     public Products(MultipartFile file) {
         this.usingUrl = false;
         this.file = file;
+    }
+
+    public Products(MultipartFile file, boolean isAffiliateWindowFormat) {
+        this.file = file;
+        this.isAffiliateWindowFormat = isAffiliateWindowFormat;
     }
 
     public boolean isUsingUrl() {
@@ -47,6 +56,14 @@ public class Products {
         this.file = file;
     }
 
+    public boolean isAffiliateWindowFormat() {
+        return isAffiliateWindowFormat;
+    }
+
+    public void setAffiliateWindowFormat(boolean isAffiliateWindowFormat) {
+        this.isAffiliateWindowFormat = isAffiliateWindowFormat;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -66,5 +83,15 @@ public class Products {
         result = 31 * result + (url != null ? url.hashCode() : 0);
         result = 31 * result + (file != null ? file.hashCode() : 0);
         return result;
+    }
+
+    public Reader generateReader() throws IOException {
+        InputStream csvInputStream;
+        if (usingUrl) {
+            csvInputStream = new URL(url).openStream();
+        } else {
+            csvInputStream = file.getInputStream();
+        }
+        return new BufferedReader(new InputStreamReader(csvInputStream));
     }
 }

@@ -5,14 +5,10 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.ui.ExtendedModelMap;
 import uk.co.dashery.clothing.Clothing;
-import uk.co.dashery.clothing.ClothingCsvParser;
 import uk.co.dashery.clothing.ClothingService;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -20,16 +16,23 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static uk.co.dashery.ClothingTestUtils.createClothing;
-import static uk.co.dashery.ClothingTestUtils.getTestCsvAsStream;
+import static uk.co.dashery.ClothingTestUtils.generateCsvFile;
 
 public class ProductsControllerTest {
 
-    public static final String URL = "test";
     @InjectMocks
     private ProductsController productsController;
 
     @Spy
-    private ClothingCsvParser clothingCsvParser = new ClothingCsvParser();
+    @InjectMocks
+    private ProductsService productsService = new ProductsService();
+
+    @Spy
+    private DasheryClothingCsvParser dasheryClothingCsvParser = new DasheryClothingCsvParser();
+    @Spy
+    private AffiliateWindowClothingCsvParser affiliateWindowClothingCsvParser = new AffiliateWindowClothingCsvParser();
+
+
     @Mock
     private ClothingService clothingService;
 
@@ -39,30 +42,12 @@ public class ProductsControllerTest {
     }
 
     @Test
-    public void testIngestProductsFromURL() throws Exception {
+    public void testIngestsProducts() throws Exception {
         List<Clothing> clothing = createClothing();
 
-        productsController.ingestProducts(new Products(testCsvUrl()));
+        productsController.ingestProducts(new Products(generateCsvFile("test.csv")));
 
         verify(clothingService).create(clothing);
-    }
-
-    private String testCsvUrl() {
-        return getClass().getClassLoader().getResource("test.csv").toString();
-    }
-
-    @Test
-    public void testIngestProductsFromFile() throws IOException {
-        List<Clothing> clothing = createClothing();
-
-        productsController.ingestProducts(new Products(generateCsvFile()));
-
-        verify(clothingService).create(clothing);
-    }
-
-    private MockMultipartFile generateCsvFile() throws IOException {
-        InputStream inputFile = getTestCsvAsStream();
-        return new MockMultipartFile("csvFile", "test.csv", "multipart/form-data", inputFile);
     }
 
     @Test

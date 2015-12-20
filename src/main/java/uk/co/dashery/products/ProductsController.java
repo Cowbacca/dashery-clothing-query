@@ -9,18 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import uk.co.dashery.clothing.Clothing;
-import uk.co.dashery.clothing.ClothingCsvParser;
 import uk.co.dashery.clothing.ClothingService;
 
-import java.io.*;
-import java.net.URL;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
 public class ProductsController {
 
     @Autowired
-    private ClothingCsvParser clothingCsvParser;
+    private ProductsService productsService;
     @Autowired
     private ClothingService clothingService;
 
@@ -33,18 +31,7 @@ public class ProductsController {
     @RequestMapping(value = "/products", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public void ingestProducts(@ModelAttribute Products products) throws IOException {
-        Reader csvReader = generateReader(products);
-        List<Clothing> clothing = clothingCsvParser.parse(csvReader);
+        List<Clothing> clothing = productsService.getClothingFrom(products);
         clothingService.create(clothing);
-    }
-
-    private Reader generateReader(Products products) throws IOException {
-        InputStream csvInputStream;
-        if (products.isUsingUrl()) {
-            csvInputStream = new URL(products.getUrl()).openStream();
-        } else {
-            csvInputStream = products.getFile().getInputStream();
-        }
-        return new BufferedReader(new InputStreamReader(csvInputStream));
     }
 }
