@@ -22,7 +22,7 @@ public class ClothingCsvParserTest {
 
     @Test
     public void testParse() throws Exception {
-        InputStreamReader resource = new InputStreamReader(getTestCsvAsStream());
+        InputStreamReader resource = new InputStreamReader(getTestCsvAsStream("test.csv"));
 
         List<Clothing> products = clothingCsvParser.parse(resource);
 

@@ -2,6 +2,9 @@ package uk.co.dashery.products;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.*;
+import java.net.URL;
+
 public class Products {
 
     private boolean usingUrl;
@@ -66,5 +69,15 @@ public class Products {
         result = 31 * result + (url != null ? url.hashCode() : 0);
         result = 31 * result + (file != null ? file.hashCode() : 0);
         return result;
+    }
+
+    public Reader generateReader() throws IOException {
+        InputStream csvInputStream;
+        if (usingUrl) {
+            csvInputStream = new URL(url).openStream();
+        } else {
+            csvInputStream = file.getInputStream();
+        }
+        return new BufferedReader(new InputStreamReader(csvInputStream));
     }
 }
