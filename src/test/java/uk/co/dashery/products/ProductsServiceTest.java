@@ -42,8 +42,8 @@ public class ProductsServiceTest {
     public void testParsesCsvInAffiliateWindowFormat() throws IOException {
         List<Clothing> products = productsService.getClothingFrom(new Products(generateCsvFile("affiliatewindow.csv"), true));
 
-        List<Clothing> expectedProducts = Lists.newArrayList(generateClothing("A Test Brand", "Test Item", 100),
-                generateClothing("Another Day", "Another Dollar", 200));
+        List<Clothing> expectedProducts = Lists.newArrayList(generateClothing("A Test Brand", "Test Item", 100, "A", "Tag", "Another"),
+                generateClothing("Another Day", "Another Dollar", 200, "Different", "Tag"));
         assertThat(products, is(expectedProducts));
     }
 }

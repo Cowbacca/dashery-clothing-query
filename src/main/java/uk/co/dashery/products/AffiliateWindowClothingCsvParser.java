@@ -1,11 +1,11 @@
 package uk.co.dashery.products;
 
+import com.google.common.collect.Sets;
 import com.univocity.parsers.common.processor.RowListProcessor;
 import org.springframework.stereotype.Component;
 import uk.co.dashery.clothing.Clothing;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -25,7 +25,7 @@ public class AffiliateWindowClothingCsvParser extends ClothingCsvParser<RowListP
     AffiliateWindowClothingCsvParser() {
         columnNameMap = new HashMap<>();
         columnNameMap.put("search_price", (clothing, price) -> clothing.price = Integer.parseInt(price));
-        columnNameMap.put("description", (clothing, description) -> clothing.tags = new HashSet<>());
+        columnNameMap.put("description", (clothing, description) -> clothing.tags = Sets.newHashSet(description.split(" ")));
         columnNameMap.put("merchant_name", (clothing, brand) -> clothing.brand = brand);
         columnNameMap.put("product_name", (clothing, name) -> clothing.name = name);
     }
