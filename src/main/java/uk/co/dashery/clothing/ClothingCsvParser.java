@@ -1,10 +1,10 @@
-package uk.co.dashery.service;
+package uk.co.dashery.clothing;
 
 import com.univocity.parsers.common.processor.BeanListProcessor;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 import org.springframework.stereotype.Component;
-import uk.co.dashery.data.Clothing;
+import uk.co.dashery.clothing.Clothing;
 
 import java.io.IOException;
 import java.io.Reader;

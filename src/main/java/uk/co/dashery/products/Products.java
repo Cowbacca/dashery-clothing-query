@@ -1,4 +1,4 @@
-package uk.co.dashery.data;
+package uk.co.dashery.products;
 
 import org.springframework.web.multipart.MultipartFile;
 

@@ -1,4 +1,4 @@
-package uk.co.dashery.data;
+package uk.co.dashery.clothing;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.univocity.parsers.annotations.Convert;
 import com.univocity.parsers.annotations.Parsed;
 import org.springframework.data.annotation.Id;
-import uk.co.dashery.service.DelimitedStringToSetConversion;
+import uk.co.dashery.conversion.DelimitedStringToSetConversion;
 
 import java.util.Set;
 

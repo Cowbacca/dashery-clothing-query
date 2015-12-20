@@ -1,7 +1,7 @@
 package uk.co.dashery;
 
 import com.google.common.collect.Sets;
-import uk.co.dashery.data.Clothing;
+import uk.co.dashery.clothing.Clothing;
 
 import java.io.InputStream;
 import java.util.ArrayList;

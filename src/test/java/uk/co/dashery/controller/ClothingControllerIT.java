@@ -11,8 +11,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.co.dashery.TestDasheryClothingQueryApplication;
-import uk.co.dashery.data.Clothing;
-import uk.co.dashery.repository.ClothingRepository;
+import uk.co.dashery.clothing.ClothingController;
+import uk.co.dashery.clothing.Clothing;
+import uk.co.dashery.clothing.ClothingRepository;
 
 import java.util.List;
 

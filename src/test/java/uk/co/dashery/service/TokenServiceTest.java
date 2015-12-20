@@ -10,7 +10,8 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 import uk.co.dashery.TestDasheryClothingQueryApplication;
-import uk.co.dashery.data.Clothing;
+import uk.co.dashery.clothing.Clothing;
+import uk.co.dashery.token.TokenService;
 
 import java.util.List;
 

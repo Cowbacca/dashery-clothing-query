@@ -1,4 +1,4 @@
-package uk.co.dashery.controller;
+package uk.co.dashery.products;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import uk.co.dashery.data.Clothing;
-import uk.co.dashery.data.Products;
-import uk.co.dashery.service.ClothingCsvParser;
-import uk.co.dashery.service.ClothingService;
+import uk.co.dashery.clothing.Clothing;
+import uk.co.dashery.clothing.ClothingCsvParser;
+import uk.co.dashery.clothing.ClothingService;
 
 import java.io.*;
 import java.net.URL;

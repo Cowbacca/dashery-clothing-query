@@ -1,6 +1,6 @@
-package uk.co.dashery.repository;
+package uk.co.dashery.clothing;
 
-import uk.co.dashery.data.Clothing;
+import uk.co.dashery.clothing.Clothing;
 
 import java.util.List;
 

@@ -1,10 +1,10 @@
-package uk.co.dashery.service;
+package uk.co.dashery.token;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import uk.co.dashery.data.Clothing;
+import uk.co.dashery.clothing.Clothing;
 
 import java.util.List;
 

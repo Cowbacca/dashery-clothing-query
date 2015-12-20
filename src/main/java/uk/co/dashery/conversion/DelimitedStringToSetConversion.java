@@ -1,4 +1,4 @@
-package uk.co.dashery.service;
+package uk.co.dashery.conversion;
 
 import com.google.common.collect.Sets;
 import com.univocity.parsers.conversions.Conversion;

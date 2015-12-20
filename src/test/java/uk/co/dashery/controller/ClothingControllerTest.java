@@ -4,8 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import uk.co.dashery.data.Clothing;
-import uk.co.dashery.service.ClothingService;
+import uk.co.dashery.clothing.ClothingController;
+import uk.co.dashery.clothing.Clothing;
+import uk.co.dashery.clothing.ClothingService;
 
 import java.util.List;
 

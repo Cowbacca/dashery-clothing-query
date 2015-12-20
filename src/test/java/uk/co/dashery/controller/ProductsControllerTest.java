@@ -7,10 +7,11 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.ui.ExtendedModelMap;
-import uk.co.dashery.data.Clothing;
-import uk.co.dashery.data.Products;
-import uk.co.dashery.service.ClothingCsvParser;
-import uk.co.dashery.service.ClothingService;
+import uk.co.dashery.clothing.Clothing;
+import uk.co.dashery.products.Products;
+import uk.co.dashery.clothing.ClothingCsvParser;
+import uk.co.dashery.clothing.ClothingService;
+import uk.co.dashery.products.ProductsController;
 
 import java.io.IOException;
 import java.io.InputStream;
