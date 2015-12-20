@@ -35,6 +35,19 @@ public class Clothing {
     @Convert(conversionClass = DelimitedStringToSetConversion.class, args = {";"})
     public Set<String> tags;
 
+    public Clothing(String brand, String name, int price, String link, String imageLink, Set<String> tags) {
+        this.brand = brand;
+        this.name = name;
+        this.price = price;
+        this.link = link;
+        this.imageLink = imageLink;
+        this.tags = tags;
+    }
+
+    public Clothing() {
+
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
