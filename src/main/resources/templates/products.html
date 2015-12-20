@@ -9,6 +9,7 @@
 
 <form action="#" th:action="@{/products}" th:object="${products}" method="post" enctype="multipart/form-data">
     <p>Using URL? <input type="checkbox" th:field="*{usingUrl}"/></p>
+
     <p>URL: <input type="text" th:field="*{url}"/></p>
 
     <p>File: <input type="file" th:field="*{file}"/></p>
