@@ -7,9 +7,9 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.springframework.ui.ExtendedModelMap;
 import uk.co.dashery.clothing.Clothing;
-import uk.co.dashery.clothing.ClothingCsvParser;
 import uk.co.dashery.clothing.ClothingService;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -25,7 +25,7 @@ public class ProductsControllerTest {
     private ProductsController productsController;
 
     @Spy
-    private ClothingCsvParser clothingCsvParser = new ClothingCsvParser();
+    private ProductsService productsService = new ProductsService();
     @Mock
     private ClothingService clothingService;
 
@@ -49,5 +49,14 @@ public class ProductsControllerTest {
         productsController.productsForm(model);
 
         assertThat(model.containsValue(new Products()), is(true));
+    }
+
+    @Test
+    public void testCreatesClothingFromCSVInAffiliateWindowFormat() throws IOException {
+        List<Clothing> expectedClothing = createClothing();
+
+        productsController.ingestProducts(new Products(generateCsvFile("affiliatewindow.csv"), true));
+
+        verify(clothingService).create(expectedClothing);
     }
 }

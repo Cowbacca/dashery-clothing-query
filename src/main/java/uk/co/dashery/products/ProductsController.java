@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import uk.co.dashery.clothing.Clothing;
-import uk.co.dashery.clothing.ClothingCsvParser;
 import uk.co.dashery.clothing.ClothingService;
 
 import java.io.IOException;
@@ -19,7 +18,7 @@ import java.util.List;
 public class ProductsController {
 
     @Autowired
-    private ClothingCsvParser clothingCsvParser;
+    private ProductsService productsService;
     @Autowired
     private ClothingService clothingService;
 
@@ -32,7 +31,7 @@ public class ProductsController {
     @RequestMapping(value = "/products", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public void ingestProducts(@ModelAttribute Products products) throws IOException {
-        List<Clothing> clothing = clothingCsvParser.parse(products);
+        List<Clothing> clothing = productsService.getClothingFrom(products);
         clothingService.create(clothing);
     }
 }
