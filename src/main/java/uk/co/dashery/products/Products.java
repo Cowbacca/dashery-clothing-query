@@ -8,10 +8,11 @@ import java.net.URL;
 public class Products {
 
     private boolean usingUrl;
-
     private String url;
 
     private MultipartFile file;
+
+    private boolean isAffiliateWindowFormat;
 
     public Products() {
     }
@@ -24,6 +25,11 @@ public class Products {
     public Products(MultipartFile file) {
         this.usingUrl = false;
         this.file = file;
+    }
+
+    public Products(MultipartFile file, boolean isAffiliateWindowFormat) {
+        this.file = file;
+        this.isAffiliateWindowFormat = isAffiliateWindowFormat;
     }
 
     public boolean isUsingUrl() {
@@ -48,6 +54,10 @@ public class Products {
 
     public void setFile(MultipartFile file) {
         this.file = file;
+    }
+
+    public boolean isAffiliateWindowFormat() {
+        return isAffiliateWindowFormat;
     }
 
     @Override

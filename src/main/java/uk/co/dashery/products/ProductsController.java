@@ -13,7 +13,6 @@ import uk.co.dashery.clothing.ClothingCsvParser;
 import uk.co.dashery.clothing.ClothingService;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.util.List;
 
 @Controller
@@ -33,8 +32,7 @@ public class ProductsController {
     @RequestMapping(value = "/products", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public void ingestProducts(@ModelAttribute Products products) throws IOException {
-        Reader csvReader = products.generateReader();
-        List<Clothing> clothing = clothingCsvParser.parse(csvReader);
+        List<Clothing> clothing = clothingCsvParser.parse(products);
         clothingService.create(clothing);
     }
 }

@@ -2,14 +2,14 @@ package uk.co.dashery.clothing;
 
 import org.junit.Before;
 import org.junit.Test;
+import uk.co.dashery.products.Products;
 
-import java.io.InputStreamReader;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static uk.co.dashery.ClothingTestUtils.createClothing;
-import static uk.co.dashery.ClothingTestUtils.getTestCsvAsStream;
+import static uk.co.dashery.ClothingTestUtils.generateCsvFile;
 
 public class ClothingCsvParserTest {
 
@@ -22,9 +22,7 @@ public class ClothingCsvParserTest {
 
     @Test
     public void testParse() throws Exception {
-        InputStreamReader resource = new InputStreamReader(getTestCsvAsStream("test.csv"));
-
-        List<Clothing> products = clothingCsvParser.parse(resource);
+        List<Clothing> products = clothingCsvParser.parse(new Products(generateCsvFile("test.csv")));
 
         List<Clothing> expectedProducts = createClothing();
         assertThat(products, is(expectedProducts));

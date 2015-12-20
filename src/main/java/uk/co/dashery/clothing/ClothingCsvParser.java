@@ -4,19 +4,19 @@ import com.univocity.parsers.common.processor.BeanListProcessor;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 import org.springframework.stereotype.Component;
+import uk.co.dashery.products.Products;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.util.List;
 
 @Component
 public class ClothingCsvParser {
-    public List<Clothing> parse(Reader csvReader) throws IOException {
+    public List<Clothing> parse(Products products) throws IOException {
         BeanListProcessor<Clothing> rowProcessor = new BeanListProcessor<>(Clothing.class);
 
         CsvParser parser = createCsvParser(rowProcessor);
 
-        parser.parse(csvReader);
+        parser.parse(products.generateReader());
 
         return rowProcessor.getBeans();
     }
