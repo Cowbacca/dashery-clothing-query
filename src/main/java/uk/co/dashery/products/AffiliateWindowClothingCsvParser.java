@@ -4,9 +4,13 @@ import com.univocity.parsers.common.processor.RowListProcessor;
 import org.springframework.stereotype.Component;
 import uk.co.dashery.clothing.Clothing;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Component
 public class AffiliateWindowClothingCsvParser extends ClothingCsvParser<RowListProcessor> {
@@ -16,25 +20,35 @@ public class AffiliateWindowClothingCsvParser extends ClothingCsvParser<RowListP
         return new RowListProcessor();
     }
 
+    private final Map<String, BiConsumer<Clothing, String>> columnNameMap;
+
+    AffiliateWindowClothingCsvParser() {
+        columnNameMap = new HashMap<>();
+        columnNameMap.put("search_price", (clothing, price) -> clothing.price = Integer.parseInt(price));
+        columnNameMap.put("description", (clothing, description) -> clothing.tags = new HashSet<>());
+    }
+
     @Override
     protected List<Clothing> getClothing(RowListProcessor rowProcessor) {
-        String[] headers = rowProcessor.getHeaders();
-        int priceColumn = 0;
-        for (int i = 0; i < headers.length; i++) {
-            switch (headers[i]) {
-                case "search_price":
-                    priceColumn = i;
-                    break;
-            }
-        }
-        final int definitivePriceColumn = priceColumn;
+        Map<Integer, BiConsumer<Clothing, String>> columnIndexMap = generateColumnIndexMap(rowProcessor);
 
+        return generateClothingFromRows(rowProcessor, columnIndexMap);
+    }
+
+    private Map<Integer, BiConsumer<Clothing, String>> generateColumnIndexMap(RowListProcessor rowProcessor) {
+        String[] headers = rowProcessor.getHeaders();
+        return IntStream.range(0, headers.length)
+                .boxed()
+                .filter(i -> columnNameMap.get(headers[i]) != null)
+                .collect(Collectors.toMap(i -> i, i -> columnNameMap.get(headers[i])));
+    }
+
+    private List<Clothing> generateClothingFromRows(RowListProcessor rowProcessor, Map<Integer, BiConsumer<Clothing, String>> columnIndexMap) {
         return rowProcessor.getRows()
                 .stream()
                 .map(row -> {
                     Clothing clothing = new Clothing();
-                    clothing.price = Integer.parseInt(row[definitivePriceColumn]);
-                    clothing.tags = new HashSet<>();
+                    columnIndexMap.forEach((index, mapping) -> mapping.accept(clothing, row[index]));
                     return clothing;
                 })
                 .collect(Collectors.toList());
