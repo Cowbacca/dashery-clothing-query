@@ -60,6 +60,10 @@ public class Products {
         return isAffiliateWindowFormat;
     }
 
+    public void setAffiliateWindowFormat(boolean isAffiliateWindowFormat) {
+        this.isAffiliateWindowFormat = isAffiliateWindowFormat;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
