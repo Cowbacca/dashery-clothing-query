@@ -3,7 +3,7 @@
 Finds clothes with given tags.
 
 ## Usage
-GET the */clothing/search?={category}:{value},{category}:{value}* endpoint to be given a JSON list of [Clothing objects](https://github.com/Cowbacca/dashery-clothing-query/blob/master/src/main/java/uk/co/dashery/data/Clothing.java) which match the values for the given categories..
+GET the */clothing/search?={value},{value}* endpoint to be given a JSON list of [Clothing objects](https://github.com/Cowbacca/dashery-clothing-query/blob/master/src/main/java/uk/co/dashery/data/Clothing.java) which have tags with the given values.
 
 ## Deployment
 
