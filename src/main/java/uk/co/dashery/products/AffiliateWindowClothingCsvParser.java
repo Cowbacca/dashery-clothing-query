@@ -27,6 +27,7 @@ public class AffiliateWindowClothingCsvParser extends ClothingCsvParser<RowListP
         columnNameMap.put("search_price", (clothing, price) -> clothing.price = Integer.parseInt(price));
         columnNameMap.put("description", (clothing, description) -> clothing.tags = new HashSet<>());
         columnNameMap.put("merchant_name", (clothing, brand) -> clothing.brand = brand);
+        columnNameMap.put("product_name", (clothing, name) -> clothing.name = name);
     }
 
     @Override
