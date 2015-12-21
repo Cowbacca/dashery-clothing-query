@@ -17,19 +17,14 @@ public class Clothing {
     @JsonIgnore
     private String id;
     @Parsed
-    @JsonIgnore
     public String brand;
     @Parsed
-    @JsonIgnore
     public String name;
-    @JsonIgnore
     @Parsed
     public int price;
     @Parsed
-    @JsonIgnore
     public String link;
     @Parsed
-    @JsonIgnore
     public String imageLink;
     @Parsed
     @Convert(conversionClass = DelimitedStringToSetConversion.class, args = {";"})
