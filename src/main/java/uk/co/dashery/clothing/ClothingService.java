@@ -21,7 +21,7 @@ public class ClothingService {
     }
 
     public void create(List<Clothing> clothing) {
-        clothingRepository.insert(clothing);
+        clothingRepository.save(clothing);
         tokenService.createFromClothing(clothing);
     }
 }

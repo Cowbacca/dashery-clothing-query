@@ -15,32 +15,38 @@ public class Clothing {
 
     @Id
     @JsonIgnore
+    @Parsed
     private String id;
     @Parsed
-    public String brand;
+    private String brand;
     @Parsed
-    public String name;
+    private String name;
     @Parsed
-    public int price;
+    private int price;
     @Parsed
-    public String link;
+    private String link;
     @Parsed
-    public String imageLink;
+    private String imageLink;
     @Parsed
     @Convert(conversionClass = DelimitedStringToSetConversion.class, args = {";"})
-    public Set<String> tags;
-
-    public Clothing(String brand, String name, int price, String link, String imageLink, Set<String> tags) {
-        this.brand = brand;
-        this.name = name;
-        this.price = price;
-        this.link = link;
-        this.imageLink = imageLink;
-        this.tags = tags;
-    }
+    private Set<String> tags;
 
     public Clothing() {
+        this(null, null, null, 0, null, null, null);
+    }
 
+    public Clothing(String id) {
+        this(id, null, null, 0, null, null, null);
+    }
+
+    public Clothing(String id, String brand, String name, int price, String link, String imageLink, Set<String> tags) {
+        this.id = id;
+        this.setBrand(brand);
+        this.setName(name);
+        this.setPrice(price);
+        this.setLink(link);
+        this.setImageLink(imageLink);
+        this.setTags(tags);
     }
 
     @Override
@@ -50,25 +56,26 @@ public class Clothing {
 
         Clothing clothing = (Clothing) o;
 
-        if (price != clothing.price) return false;
+        if (getPrice() != clothing.getPrice()) return false;
         if (id != null ? !id.equals(clothing.id) : clothing.id != null) return false;
-        if (brand != null ? !brand.equals(clothing.brand) : clothing.brand != null) return false;
-        if (name != null ? !name.equals(clothing.name) : clothing.name != null) return false;
-        if (link != null ? !link.equals(clothing.link) : clothing.link != null) return false;
-        if (imageLink != null ? !imageLink.equals(clothing.imageLink) : clothing.imageLink != null) return false;
-        return !(tags != null ? !tags.equals(clothing.tags) : clothing.tags != null);
+        if (getBrand() != null ? !getBrand().equals(clothing.getBrand()) : clothing.getBrand() != null) return false;
+        if (getName() != null ? !getName().equals(clothing.getName()) : clothing.getName() != null) return false;
+        if (getLink() != null ? !getLink().equals(clothing.getLink()) : clothing.getLink() != null) return false;
+        if (getImageLink() != null ? !getImageLink().equals(clothing.getImageLink()) : clothing.getImageLink() != null)
+            return false;
+        return !(getTags() != null ? !getTags().equals(clothing.getTags()) : clothing.getTags() != null);
 
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (brand != null ? brand.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + price;
-        result = 31 * result + (link != null ? link.hashCode() : 0);
-        result = 31 * result + (imageLink != null ? imageLink.hashCode() : 0);
-        result = 31 * result + (tags != null ? tags.hashCode() : 0);
+        result = 31 * result + (getBrand() != null ? getBrand().hashCode() : 0);
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + getPrice();
+        result = 31 * result + (getLink() != null ? getLink().hashCode() : 0);
+        result = 31 * result + (getImageLink() != null ? getImageLink().hashCode() : 0);
+        result = 31 * result + (getTags() != null ? getTags().hashCode() : 0);
         return result;
     }
 
@@ -76,12 +83,64 @@ public class Clothing {
     public String toString() {
         return "Clothing{" +
                 "id='" + id + '\'' +
-                ", brand='" + brand + '\'' +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", link='" + link + '\'' +
-                ", imageLink='" + imageLink + '\'' +
-                ", tags=" + tags +
+                ", brand='" + getBrand() + '\'' +
+                ", name='" + getName() + '\'' +
+                ", price=" + getPrice() +
+                ", link='" + getLink() + '\'' +
+                ", imageLink='" + getImageLink() + '\'' +
+                ", tags=" + getTags() +
                 '}';
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
+    }
+
+    public Set<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<String> tags) {
+        this.tags = tags;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

@@ -5,22 +5,19 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
-import uk.co.dashery.TestDasheryClothingQueryApplication;
+import uk.co.dashery.DasheryClothingQueryIntegrationTest;
 import uk.co.dashery.clothing.Clothing;
 
 import java.util.List;
 
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
-import static org.mockito.MockitoAnnotations.initMocks;
 import static uk.co.dashery.ClothingTestUtils.createClothing;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TestDasheryClothingQueryApplication.class)
-@TestPropertySource("classpath:service-test.properties")
+@DasheryClothingQueryIntegrationTest
 public class TokenServiceTest {
 
     @Autowired
@@ -35,7 +32,7 @@ public class TokenServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        initMocks(this);
+        reset(restTemplate);
     }
 
     @Test
