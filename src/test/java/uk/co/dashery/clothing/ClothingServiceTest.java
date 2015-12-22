@@ -48,7 +48,7 @@ public class ClothingServiceTest {
 
         clothingService.create(clothing);
 
-        verify(mockClothingRepository).insert(clothing);
+        verify(mockClothingRepository).save(clothing);
         verify(tokenService).createFromClothing(clothing);
 
     }
