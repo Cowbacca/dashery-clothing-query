@@ -20,10 +20,10 @@ public class ClothingTestUtils {
 
     public static Clothing generateClothing(String brand, String name, int price, String... tags) {
         Clothing clothing = new Clothing();
-        clothing.brand = brand;
-        clothing.name = name;
-        clothing.price = price;
-        clothing.tags = Sets.newHashSet(tags);
+        clothing.setBrand(brand);
+        clothing.setName(name);
+        clothing.setPrice(price);
+        clothing.setTags(Sets.newHashSet(tags));
         return clothing;
     }
 

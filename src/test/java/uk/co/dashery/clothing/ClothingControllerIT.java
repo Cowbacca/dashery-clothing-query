@@ -7,10 +7,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import uk.co.dashery.TestDasheryClothingQueryApplication;
+import uk.co.dashery.DasheryClothingQueryIntegrationTest;
 
 import java.util.List;
 
@@ -19,8 +17,7 @@ import static org.junit.Assert.assertThat;
 import static uk.co.dashery.ClothingTestUtils.generateClothing;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TestDasheryClothingQueryApplication.class)
-@TestPropertySource("classpath:service-test.properties")
+@DasheryClothingQueryIntegrationTest
 public class ClothingControllerIT {
 
     @Autowired

@@ -24,12 +24,12 @@ public class AffiliateWindowClothingCsvParser extends ClothingCsvParser<RowListP
 
     AffiliateWindowClothingCsvParser() {
         columnNameMap = new HashMap<>();
-        columnNameMap.put("search_price", (clothing, price) -> clothing.price = Integer.parseInt(price.replace(".", "")));
-        columnNameMap.put("description", (clothing, description) -> clothing.tags = Sets.newHashSet(description.split(" ")));
-        columnNameMap.put("merchant_name", (clothing, brand) -> clothing.brand = brand);
-        columnNameMap.put("product_name", (clothing, name) -> clothing.name = name);
-        columnNameMap.put("aw_deep_link", (clothing, link) -> clothing.link = link);
-        columnNameMap.put("merchant_image_url", (clothing, imageLink) -> clothing.imageLink = imageLink);
+        columnNameMap.put("search_price", (clothing, price) -> clothing.setPrice(Integer.parseInt(price.replace(".", ""))));
+        columnNameMap.put("description", (clothing, description) -> clothing.setTags(Sets.newHashSet(description.split(" "))));
+        columnNameMap.put("merchant_name", (clothing, brand) -> clothing.setBrand(brand));
+        columnNameMap.put("product_name", (clothing, name) -> clothing.setName(name));
+        columnNameMap.put("aw_deep_link", (clothing, link) -> clothing.setLink(link));
+        columnNameMap.put("merchant_image_url", (clothing, imageLink) -> clothing.setImageLink(imageLink));
     }
 
     @Override
