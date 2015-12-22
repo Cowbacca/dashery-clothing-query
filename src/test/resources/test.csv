@@ -1,3 +1,3 @@
-brand,name,price,link,imageLink,tags
-Test Brand,Test Item,100,,,A Tag;Another Tag
-Another Day,Another Dollar,200,,,Different Tag
+id,brand,name,price,link,imageLink,tags
+id123,Test Brand,Test Item,100,,,A Tag;Another Tag
+id456,Another Day,Another Dollar,200,,,Different Tag

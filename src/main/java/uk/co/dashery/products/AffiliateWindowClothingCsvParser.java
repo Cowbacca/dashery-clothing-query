@@ -30,6 +30,7 @@ public class AffiliateWindowClothingCsvParser extends ClothingCsvParser<RowListP
         columnNameMap.put("product_name", (clothing, name) -> clothing.setName(name));
         columnNameMap.put("aw_deep_link", (clothing, link) -> clothing.setLink(link));
         columnNameMap.put("merchant_image_url", (clothing, imageLink) -> clothing.setImageLink(imageLink));
+        columnNameMap.put("merchant_product_id", (clothing, id) -> clothing.setId(id));
     }
 
     @Override

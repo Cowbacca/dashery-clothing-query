@@ -1,6 +1,7 @@
 package uk.co.dashery.products;
 
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ public class ProductsControllerIT {
         mongoTemplate.getDb().dropDatabase();
     }
 
+    @Ignore
     @Test
     public void testUpdatesClothingRatherThanDuplicates() throws IOException {
         productsController.ingestProducts(new Products(generateCsvFile("test.csv")));

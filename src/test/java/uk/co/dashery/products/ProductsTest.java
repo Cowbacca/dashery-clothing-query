@@ -11,13 +11,15 @@ import static uk.co.dashery.ClothingTestUtils.generateCsvFile;
 
 public class ProductsTest {
 
+    public static final String FIRST_FIVE_LETTERS_OF_FILE = "id,br";
+
     @Test
     public void testGeneratesReaderFromURL() throws IOException {
         Products products = new Products(testCsvUrl());
 
         Reader reader = products.generateReader();
 
-        assertThatFirstFiveCharsOfReaderAre(reader, "brand".toCharArray());
+        assertThatFirstFiveCharsOfReaderAre(reader, FIRST_FIVE_LETTERS_OF_FILE.toCharArray());
     }
 
     private String testCsvUrl() {
@@ -30,7 +32,7 @@ public class ProductsTest {
 
         Reader reader = products.generateReader();
 
-        assertThatFirstFiveCharsOfReaderAre(reader, "brand".toCharArray());
+        assertThatFirstFiveCharsOfReaderAre(reader, FIRST_FIVE_LETTERS_OF_FILE.toCharArray());
     }
 
     private void assertThatFirstFiveCharsOfReaderAre(Reader reader, char[] firstFiveChars) throws IOException {

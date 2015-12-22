@@ -15,6 +15,7 @@ public class Clothing {
 
     @Id
     @JsonIgnore
+    @Parsed
     private String id;
     @Parsed
     private String brand;
@@ -30,17 +31,22 @@ public class Clothing {
     @Convert(conversionClass = DelimitedStringToSetConversion.class, args = {";"})
     private Set<String> tags;
 
-    public Clothing(String brand, String name, int price, String link, String imageLink, Set<String> tags) {
+    public Clothing() {
+        this(null, null, null, 0, null, null, null);
+    }
+
+    public Clothing(String id) {
+        this(id, null, null, 0, null, null, null);
+    }
+
+    public Clothing(String id, String brand, String name, int price, String link, String imageLink, Set<String> tags) {
+        this.id = id;
         this.setBrand(brand);
         this.setName(name);
         this.setPrice(price);
         this.setLink(link);
         this.setImageLink(imageLink);
         this.setTags(tags);
-    }
-
-    public Clothing() {
-
     }
 
     @Override
@@ -132,5 +138,9 @@ public class Clothing {
 
     public void setTags(Set<String> tags) {
         this.tags = tags;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

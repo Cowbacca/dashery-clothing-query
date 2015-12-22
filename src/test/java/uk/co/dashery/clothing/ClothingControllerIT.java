@@ -31,8 +31,8 @@ public class ClothingControllerIT {
 
     @Before
     public void setUp() throws Exception {
-        bananaAppleClothing = generateClothing("Test Brand", "Test Name", 100, "Banana", "Apple");
-        justBananaClothing = generateClothing("Test Brand", "Test Name", 100, "Banana");
+        bananaAppleClothing = generateClothing("id123", "Test Brand", "Test Name", 100, "Banana", "Apple");
+        justBananaClothing = generateClothing("id456", "Test Brand", "Test Name", 100, "Banana");
         clothingRepository.insert(Lists.newArrayList(bananaAppleClothing, justBananaClothing));
     }
 
