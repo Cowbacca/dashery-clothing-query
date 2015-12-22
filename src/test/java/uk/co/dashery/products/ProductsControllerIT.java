@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.co.dashery.DasheryClothingQueryIntegrationTest;
+import uk.co.dashery.clothing.Clothing;
 import uk.co.dashery.clothing.ClothingRepository;
 
 import java.io.IOException;
@@ -36,8 +37,13 @@ public class ProductsControllerIT {
     @Test
     public void testUpdatesClothingRatherThanDuplicates() throws IOException {
         productsController.ingestProducts(new Products(generateCsvFile("test.csv")));
-        productsController.ingestProducts(new Products(generateCsvFile("test.csv")));
+        assertThat(firstClothingWithTagNamedATag().getPrice(), is(100));
 
-        assertThat(clothingRepository.findByAllTagsIn("A Tag").size(), is(1));
+        productsController.ingestProducts(new Products(generateCsvFile("test-updated.csv")));
+        assertThat(firstClothingWithTagNamedATag().getPrice(), is(150));
+    }
+
+    private Clothing firstClothingWithTagNamedATag() {
+        return clothingRepository.findByAllTagsIn("A Tag").get(0);
     }
 }
