@@ -69,12 +69,9 @@ public class AcceptanceTest {
     private void assertThatAttributesHaveExpectedValues(JsonObject firstClothing) {
         HashMap<String, String> expectedAttributeValues = getExpectedAttributeValues();
 
-        expectedAttributeValues.entrySet().stream()
-                .forEach(entry -> {
-                    String attribute = entry.getKey();
-                    String expectedValue = entry.getValue();
-                    assertThat(firstClothing.get(attribute).getAsString(), is(expectedValue));
-                });
+        expectedAttributeValues
+                .forEach((attribute, expectedValue) ->
+                        assertThat(firstClothing.get(attribute).getAsString(), is(expectedValue)));
     }
 
     private HashMap<String, String> getExpectedAttributeValues() {
