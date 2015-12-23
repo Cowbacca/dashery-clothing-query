@@ -48,4 +48,9 @@ public class ProductsServiceTest {
                 new Clothing("id456", "Another Day", "Another Dollar", 200, "different_link", "image2.jpg", Sets.newHashSet("Different", "Tag")));
         assertThat(products, is(expectedProducts));
     }
+
+    @Test(expected = RuntimeException.class)
+    public void testGivesAnErrorWhenRequiredFieldsAreNotPresentInAffiliateWindowCsv() throws IOException {
+        productsService.getClothingFrom(new Products(generateCsvFile("affiliatewindow-no-brand.csv"), true));
+    }
 }
