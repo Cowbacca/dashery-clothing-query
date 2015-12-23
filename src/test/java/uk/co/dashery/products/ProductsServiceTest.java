@@ -49,7 +49,7 @@ public class ProductsServiceTest {
         assertThat(products, is(expectedProducts));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = CsvFormatException.class)
     public void testGivesAnErrorWhenRequiredFieldsAreNotPresentInAffiliateWindowCsv() throws IOException {
         productsService.getClothingFrom(new Products(generateCsvFile("affiliatewindow-no-brand.csv"), true));
     }

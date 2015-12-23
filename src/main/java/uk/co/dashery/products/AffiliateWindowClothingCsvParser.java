@@ -64,7 +64,7 @@ public class AffiliateWindowClothingCsvParser extends ClothingCsvParser<RowListP
     private Integer getIndex(Map<String, Integer> nameToIndexMap, String name) {
         Integer index = nameToIndexMap.get(name);
         if (index == null) {
-            throw new RuntimeException("Column " + name + " must be present in CSV file.");
+            throw new CsvFormatException("Column " + name + " must be present in CSV file.");
         }
         return index;
     }
