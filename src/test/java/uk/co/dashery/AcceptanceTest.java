@@ -3,15 +3,17 @@ package uk.co.dashery;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
+import uk.co.dashery.clothing.ClothingController;
+import uk.co.dashery.products.ProductsController;
 
 import java.util.HashMap;
 
@@ -21,19 +23,27 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
 @DasheryClothingQueryIntegrationTest
 public class AcceptanceTest {
 
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Autowired
-    private WebApplicationContext webApplicationContext;
+    private ProductsController productsController;
+    @Autowired
+    private ClothingController clothingController;
 
     private MockMvc mockMvc;
 
     @Before
     public void setUp() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(productsController, clothingController).build();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        mongoTemplate.getDb().dropDatabase();
     }
 
     @Test
