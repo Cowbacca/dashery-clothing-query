@@ -8,6 +8,8 @@ import org.mockito.Spy;
 import org.springframework.ui.ExtendedModelMap;
 import uk.co.dashery.clothing.Clothing;
 import uk.co.dashery.clothing.ClothingService;
+import uk.co.dashery.productfeed.csv.AffiliateWindowClothingCsvParser;
+import uk.co.dashery.productfeed.csv.DasheryClothingCsvParser;
 
 import java.util.List;
 

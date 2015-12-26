@@ -7,6 +7,9 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import uk.co.dashery.clothing.Clothing;
+import uk.co.dashery.productfeed.csv.AffiliateWindowClothingCsvParser;
+import uk.co.dashery.productfeed.csv.CsvFormatException;
+import uk.co.dashery.productfeed.csv.DasheryClothingCsvParser;
 
 import java.io.IOException;
 import java.util.List;

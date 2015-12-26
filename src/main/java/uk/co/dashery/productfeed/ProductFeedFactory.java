@@ -1,6 +1,9 @@
 package uk.co.dashery.productfeed;
 
 import org.springframework.stereotype.Component;
+import uk.co.dashery.productfeed.csv.AffiliateWindowClothingCsvParser;
+import uk.co.dashery.productfeed.csv.ClothingCsvParser;
+import uk.co.dashery.productfeed.csv.DasheryClothingCsvParser;
 
 import javax.inject.Inject;
 import java.io.IOException;

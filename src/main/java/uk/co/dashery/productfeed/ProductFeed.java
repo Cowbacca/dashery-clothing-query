@@ -1,6 +1,7 @@
 package uk.co.dashery.productfeed;
 
 import uk.co.dashery.clothing.Clothing;
+import uk.co.dashery.productfeed.csv.ClothingCsvParser;
 
 import java.io.IOException;
 import java.io.Reader;
