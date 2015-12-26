@@ -1,4 +1,4 @@
-package uk.co.dashery.products;
+package uk.co.dashery.productfeed;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,23 +15,24 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
-public class ProductsController {
+public class ProductFeedController {
 
     @Autowired
-    private ProductsService productsService;
+    private ProductFeedFactory productFeedFactory;
     @Autowired
     private ClothingService clothingService;
 
-    @RequestMapping(value = "/products", method = RequestMethod.GET)
+    @RequestMapping(value = "/productFeed", method = RequestMethod.GET)
     public String productsForm(Model model) {
-        model.addAttribute("products", new Products());
-        return "products";
+        model.addAttribute("productFeed", new ProductFeedForm());
+        return "productFeed";
     }
 
-    @RequestMapping(value = "/products", method = RequestMethod.POST)
+    @RequestMapping(value = "/productFeed", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
-    public void ingestProducts(@ModelAttribute Products products) throws IOException {
-        List<Clothing> clothing = productsService.getClothingFrom(products);
+    public void ingestProducts(@ModelAttribute ProductFeedForm productFeedForm) throws IOException {
+        ProductFeed productFeed = productFeedFactory.create(productFeedForm);
+        List<Clothing> clothing = productFeed.getClothing();
         clothingService.create(clothing);
     }
 }

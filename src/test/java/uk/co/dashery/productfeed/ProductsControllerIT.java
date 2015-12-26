@@ -1,4 +1,4 @@
-package uk.co.dashery.products;
+package uk.co.dashery.productfeed;
 
 import org.junit.After;
 import org.junit.Test;
@@ -24,7 +24,7 @@ public class ProductsControllerIT {
     private MongoTemplate mongoTemplate;
 
     @Autowired
-    private ProductsController productsController;
+    private ProductFeedController productFeedController;
     @Autowired
     private ClothingRepository clothingRepository;
 
@@ -36,10 +36,10 @@ public class ProductsControllerIT {
 
     @Test
     public void testUpdatesClothingRatherThanDuplicates() throws IOException {
-        productsController.ingestProducts(new Products(generateCsvFile("test.csv")));
+        productFeedController.ingestProducts(new ProductFeedForm(generateCsvFile("test.csv")));
         assertThat(firstClothingWithTagNamedATag().getPrice(), is(100));
 
-        productsController.ingestProducts(new Products(generateCsvFile("test-updated.csv")));
+        productFeedController.ingestProducts(new ProductFeedForm(generateCsvFile("test-updated.csv")));
         assertThat(firstClothingWithTagNamedATag().getPrice(), is(150));
     }
 

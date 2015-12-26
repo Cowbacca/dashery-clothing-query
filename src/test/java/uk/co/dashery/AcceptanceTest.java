@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import uk.co.dashery.clothing.ClothingController;
-import uk.co.dashery.products.ProductsController;
+import uk.co.dashery.productfeed.ProductFeedController;
 
 import java.util.HashMap;
 
@@ -30,7 +30,7 @@ public class AcceptanceTest {
     private MongoTemplate mongoTemplate;
 
     @Autowired
-    private ProductsController productsController;
+    private ProductFeedController productFeedController;
     @Autowired
     private ClothingController clothingController;
 
@@ -38,7 +38,7 @@ public class AcceptanceTest {
 
     @Before
     public void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(productsController, clothingController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(productFeedController, clothingController).build();
     }
 
     @After
@@ -59,7 +59,7 @@ public class AcceptanceTest {
     private void givenAUrlToACsvFileInAffiliateWindowFormatHasBeenProvided() throws Exception {
         ClassLoader classLoader = getClass().getClassLoader();
         String urlString = classLoader.getResource("affiliatewindow.csv").toString();
-        mockMvc.perform(post("/products")
+        mockMvc.perform(post("/productFeed")
                 .param("url", urlString)
                 .param("usingUrl", "true")
                 .param("affiliateWindowFormat", "true"))

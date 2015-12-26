@@ -1,4 +1,4 @@
-package uk.co.dashery.products;
+package uk.co.dashery.productfeed;
 
 import com.google.common.collect.Sets;
 import com.univocity.parsers.common.processor.RowListProcessor;

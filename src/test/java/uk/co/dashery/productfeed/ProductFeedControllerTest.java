@@ -1,4 +1,4 @@
-package uk.co.dashery.products;
+package uk.co.dashery.productfeed;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,14 +18,14 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import static uk.co.dashery.ClothingTestUtils.createClothing;
 import static uk.co.dashery.ClothingTestUtils.generateCsvFile;
 
-public class ProductsControllerTest {
+public class ProductFeedControllerTest {
 
     @InjectMocks
-    private ProductsController productsController;
+    private ProductFeedController productFeedController;
 
     @Spy
     @InjectMocks
-    private ProductsService productsService = new ProductsService();
+    private ProductFeedFactory productFeedFactory = new ProductFeedFactory();
 
     @Spy
     private DasheryClothingCsvParser dasheryClothingCsvParser = new DasheryClothingCsvParser();
@@ -45,7 +45,7 @@ public class ProductsControllerTest {
     public void testIngestsProducts() throws Exception {
         List<Clothing> clothing = createClothing();
 
-        productsController.ingestProducts(new Products(generateCsvFile("test.csv")));
+        productFeedController.ingestProducts(new ProductFeedForm(generateCsvFile("test.csv")));
 
         verify(clothingService).create(clothing);
     }
@@ -53,8 +53,8 @@ public class ProductsControllerTest {
     @Test
     public void testProductsForm() {
         ExtendedModelMap model = new ExtendedModelMap();
-        productsController.productsForm(model);
+        productFeedController.productsForm(model);
 
-        assertThat(model.containsValue(new Products()), is(true));
+        assertThat(model.containsValue(new ProductFeedForm()), is(true));
     }
 }
