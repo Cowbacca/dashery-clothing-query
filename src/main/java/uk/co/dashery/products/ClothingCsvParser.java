@@ -6,15 +6,16 @@ import com.univocity.parsers.csv.CsvParserSettings;
 import uk.co.dashery.clothing.Clothing;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.util.List;
 
 public abstract class ClothingCsvParser<T extends RowProcessor> {
-    public List<Clothing> parse(ProductsForm productsForm) throws IOException {
+    public List<Clothing> parse(Reader csvReader) throws IOException {
         T rowProcessor = getRowProcessor();
 
         CsvParser parser = createCsvParser(rowProcessor);
 
-        parser.parse(productsForm.generateReader());
+        parser.parse(csvReader);
 
         return getClothing(rowProcessor);
     }

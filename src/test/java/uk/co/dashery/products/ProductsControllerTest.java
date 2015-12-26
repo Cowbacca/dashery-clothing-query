@@ -18,14 +18,14 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import static uk.co.dashery.ClothingTestUtils.createClothing;
 import static uk.co.dashery.ClothingTestUtils.generateCsvFile;
 
-public class ProductsFormControllerTest {
+public class ProductsControllerTest {
 
     @InjectMocks
     private ProductsController productsController;
 
     @Spy
     @InjectMocks
-    private ProductsService productsService = new ProductsService();
+    private ProductsFactory productsFactory = new ProductsFactory();
 
     @Spy
     private DasheryClothingCsvParser dasheryClothingCsvParser = new DasheryClothingCsvParser();

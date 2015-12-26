@@ -17,7 +17,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import static uk.co.dashery.ClothingTestUtils.createClothing;
 import static uk.co.dashery.ClothingTestUtils.generateCsvFile;
 
-public class ProductsFormServiceTest {
+public class ProductsTest {
 
     @Spy
     private DasheryClothingCsvParser dasheryClothingCsvParser = new DasheryClothingCsvParser();
@@ -25,7 +25,7 @@ public class ProductsFormServiceTest {
     private AffiliateWindowClothingCsvParser affiliateWindowClothingCsvParser = new AffiliateWindowClothingCsvParser();
 
     @InjectMocks
-    private ProductsService productsService;
+    private ProductsFactory productsFactory;
 
     @Before
     public void setUp() throws Exception {
@@ -34,23 +34,34 @@ public class ProductsFormServiceTest {
 
     @Test
     public void testParsesCsvInDasheryFormat() throws Exception {
-        List<Clothing> products = productsService.getClothingFrom(new ProductsForm(generateCsvFile("test.csv"), false));
+        Products products = productsFactory.create(new ProductsForm(generateCsvFile("test.csv"), false));
 
-        List<Clothing> expectedProducts = createClothing();
-        assertThat(products, is(expectedProducts));
+        List<Clothing> clothing = products.getClothing();
+
+        List<Clothing> expectedClothing = createClothing();
+        assertThat(clothing, is(expectedClothing));
     }
 
     @Test
     public void testParsesCsvInAffiliateWindowFormat() throws IOException {
-        List<Clothing> products = productsService.getClothingFrom(new ProductsForm(generateCsvFile("affiliatewindow.csv"), true));
+        Products products = productsFactory.create(new ProductsForm(generateCsvFile("affiliatewindow.csv"),
+                true));
 
-        List<Clothing> expectedProducts = Lists.newArrayList(new Clothing("id123", "A Test Brand", "Test Item", 10000, "a_link.html", "image.jpg", Sets.newHashSet("A", "Tag", "Another")),
-                new Clothing("id456", "Another Day", "Another Dollar", 200, "different_link", "image2.jpg", Sets.newHashSet("Different", "Tag")));
-        assertThat(products, is(expectedProducts));
+        List<Clothing> clothing = products.getClothing();
+
+        List<Clothing> expectedClothing = Lists.newArrayList(
+                new Clothing("id123", "A Test Brand", "Test Item", 10000, "a_link.html", "image.jpg",
+                        Sets.newHashSet("A", "Tag", "Another")),
+                new Clothing("id456", "Another Day", "Another Dollar", 200, "different_link", "image2.jpg",
+                        Sets.newHashSet("Different", "Tag")));
+        assertThat(clothing, is(expectedClothing));
     }
 
     @Test(expected = CsvFormatException.class)
     public void testGivesAnErrorWhenRequiredFieldsAreNotPresentInAffiliateWindowCsv() throws IOException {
-        productsService.getClothingFrom(new ProductsForm(generateCsvFile("affiliatewindow-no-brand.csv"), true));
+        Products products = productsFactory.create(
+                new ProductsForm(generateCsvFile("affiliatewindow-no-brand.csv"), true));
+
+        List<Clothing> clothing = products.getClothing();
     }
 }

@@ -18,7 +18,7 @@ import java.util.List;
 public class ProductsController {
 
     @Autowired
-    private ProductsService productsService;
+    private ProductsFactory productsFactory;
     @Autowired
     private ClothingService clothingService;
 
@@ -31,7 +31,8 @@ public class ProductsController {
     @RequestMapping(value = "/products", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public void ingestProducts(@ModelAttribute ProductsForm productsForm) throws IOException {
-        List<Clothing> clothing = productsService.getClothingFrom(productsForm);
+        Products products = productsFactory.create(productsForm);
+        List<Clothing> clothing = products.getClothing();
         clothingService.create(clothing);
     }
 }
