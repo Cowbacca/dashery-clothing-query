@@ -39,7 +39,8 @@ public class ProductsControllerIT {
         productFeedController.ingestProducts(new ProductFeedForm(generateCsvFile("test.csv")));
         assertThat(firstClothingWithTagNamedATag().getPrice(), is(100));
 
-        productFeedController.ingestProducts(new ProductFeedForm(generateCsvFile("test-updated.csv")));
+        productFeedController.ingestProducts(new ProductFeedForm(generateCsvFile("test-updated" +
+                ".csv")));
         assertThat(firstClothingWithTagNamedATag().getPrice(), is(150));
     }
 

@@ -25,7 +25,8 @@ public class DelimitedStringToSetConversionTest {
     @Test
     public void testExecute() throws Exception {
         String delimitedString = generateDelimitedString(DELIMITER);
-        assertThat(delimitedStringToSetConversion.execute(delimitedString), is(Sets.newHashSet(A_TOKEN, ANOTHER_TOKEN)));
+        assertThat(delimitedStringToSetConversion.execute(delimitedString), is(Sets.newHashSet
+                (A_TOKEN, ANOTHER_TOKEN)));
     }
 
     private String generateDelimitedString(String delimiter) {
@@ -35,7 +36,8 @@ public class DelimitedStringToSetConversionTest {
     @Test
     public void testRevert() throws Exception {
         String delimitedString = generateDelimitedString(DELIMITER);
-        assertThat(delimitedStringToSetConversion.revert(Sets.newHashSet(A_TOKEN, ANOTHER_TOKEN)), is(delimitedString));
+        assertThat(delimitedStringToSetConversion.revert(Sets.newHashSet(A_TOKEN, ANOTHER_TOKEN))
+                , is(delimitedString));
     }
 
     @Test

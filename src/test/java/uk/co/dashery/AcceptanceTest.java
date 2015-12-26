@@ -38,7 +38,8 @@ public class AcceptanceTest {
 
     @Before
     public void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(productFeedController, clothingController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(productFeedController, clothingController)
+                .build();
     }
 
     @After

@@ -35,7 +35,8 @@ public class ProductFeedFormTest {
         assertThatFirstFiveCharsOfReaderAre(reader, FIRST_FIVE_LETTERS_OF_FILE.toCharArray());
     }
 
-    private void assertThatFirstFiveCharsOfReaderAre(Reader reader, char[] firstFiveChars) throws IOException {
+    private void assertThatFirstFiveCharsOfReaderAre(Reader reader, char[] firstFiveChars) throws
+            IOException {
         char[] chars = new char[5];
         reader.read(chars);
 
