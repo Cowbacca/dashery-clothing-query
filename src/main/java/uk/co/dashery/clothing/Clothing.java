@@ -32,7 +32,7 @@ public class Clothing {
     private Set<String> tags;
 
     public Clothing() {
-        this(null, null, null, 0, null, null, null);
+        this(null);
     }
 
     public Clothing(String id) {
