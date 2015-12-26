@@ -18,7 +18,7 @@ import static uk.co.dashery.ClothingTestUtils.generateCsvFile;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @DasheryClothingQueryIntegrationTest
-public class ProductsControllerIT {
+public class ProductFeedControllerIT {
 
     @Inject
     private MongoTemplate mongoTemplate;
