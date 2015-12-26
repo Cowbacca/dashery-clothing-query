@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.net.URL;
 
-public class Products {
+public class ProductsForm {
 
     private boolean usingUrl;
     private String url;
@@ -14,20 +14,20 @@ public class Products {
 
     private boolean isAffiliateWindowFormat;
 
-    public Products() {
+    public ProductsForm() {
     }
 
-    public Products(String url) {
+    public ProductsForm(String url) {
         this.usingUrl = true;
         this.url = url;
     }
 
-    public Products(MultipartFile file) {
+    public ProductsForm(MultipartFile file) {
         this.usingUrl = false;
         this.file = file;
     }
 
-    public Products(MultipartFile file, boolean isAffiliateWindowFormat) {
+    public ProductsForm(MultipartFile file, boolean isAffiliateWindowFormat) {
         this.file = file;
         this.isAffiliateWindowFormat = isAffiliateWindowFormat;
     }
@@ -69,11 +69,11 @@ public class Products {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Products products = (Products) o;
+        ProductsForm productsForm = (ProductsForm) o;
 
-        if (usingUrl != products.usingUrl) return false;
-        if (url != null ? !url.equals(products.url) : products.url != null) return false;
-        return !(file != null ? !file.equals(products.file) : products.file != null);
+        if (usingUrl != productsForm.usingUrl) return false;
+        if (url != null ? !url.equals(productsForm.url) : productsForm.url != null) return false;
+        return !(file != null ? !file.equals(productsForm.file) : productsForm.file != null);
 
     }
 

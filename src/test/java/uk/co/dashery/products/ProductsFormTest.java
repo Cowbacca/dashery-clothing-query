@@ -9,15 +9,15 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static uk.co.dashery.ClothingTestUtils.generateCsvFile;
 
-public class ProductsTest {
+public class ProductsFormTest {
 
     public static final String FIRST_FIVE_LETTERS_OF_FILE = "id,br";
 
     @Test
     public void testGeneratesReaderFromURL() throws IOException {
-        Products products = new Products(testCsvUrl());
+        ProductsForm productsForm = new ProductsForm(testCsvUrl());
 
-        Reader reader = products.generateReader();
+        Reader reader = productsForm.generateReader();
 
         assertThatFirstFiveCharsOfReaderAre(reader, FIRST_FIVE_LETTERS_OF_FILE.toCharArray());
     }
@@ -28,9 +28,9 @@ public class ProductsTest {
 
     @Test
     public void testGeneratesReaderFromFile() throws IOException {
-        Products products = new Products(generateCsvFile("test.csv"));
+        ProductsForm productsForm = new ProductsForm(generateCsvFile("test.csv"));
 
-        Reader reader = products.generateReader();
+        Reader reader = productsForm.generateReader();
 
         assertThatFirstFiveCharsOfReaderAre(reader, FIRST_FIVE_LETTERS_OF_FILE.toCharArray());
     }

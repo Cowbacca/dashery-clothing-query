@@ -14,11 +14,11 @@ public class ProductsService {
     @Autowired
     private AffiliateWindowClothingCsvParser affiliateWindowClothingCsvParser;
 
-    public List<Clothing> getClothingFrom(Products products) throws IOException {
-        if (products.isAffiliateWindowFormat()) {
-            return affiliateWindowClothingCsvParser.parse(products);
+    public List<Clothing> getClothingFrom(ProductsForm productsForm) throws IOException {
+        if (productsForm.isAffiliateWindowFormat()) {
+            return affiliateWindowClothingCsvParser.parse(productsForm);
         } else {
-            return dasheryClothingCsvParser.parse(products);
+            return dasheryClothingCsvParser.parse(productsForm);
         }
     }
 

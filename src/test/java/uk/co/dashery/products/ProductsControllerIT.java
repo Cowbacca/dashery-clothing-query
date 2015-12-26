@@ -36,10 +36,10 @@ public class ProductsControllerIT {
 
     @Test
     public void testUpdatesClothingRatherThanDuplicates() throws IOException {
-        productsController.ingestProducts(new Products(generateCsvFile("test.csv")));
+        productsController.ingestProducts(new ProductsForm(generateCsvFile("test.csv")));
         assertThat(firstClothingWithTagNamedATag().getPrice(), is(100));
 
-        productsController.ingestProducts(new Products(generateCsvFile("test-updated.csv")));
+        productsController.ingestProducts(new ProductsForm(generateCsvFile("test-updated.csv")));
         assertThat(firstClothingWithTagNamedATag().getPrice(), is(150));
     }
 

@@ -17,7 +17,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import static uk.co.dashery.ClothingTestUtils.createClothing;
 import static uk.co.dashery.ClothingTestUtils.generateCsvFile;
 
-public class ProductsServiceTest {
+public class ProductsFormServiceTest {
 
     @Spy
     private DasheryClothingCsvParser dasheryClothingCsvParser = new DasheryClothingCsvParser();
@@ -34,7 +34,7 @@ public class ProductsServiceTest {
 
     @Test
     public void testParsesCsvInDasheryFormat() throws Exception {
-        List<Clothing> products = productsService.getClothingFrom(new Products(generateCsvFile("test.csv"), false));
+        List<Clothing> products = productsService.getClothingFrom(new ProductsForm(generateCsvFile("test.csv"), false));
 
         List<Clothing> expectedProducts = createClothing();
         assertThat(products, is(expectedProducts));
@@ -42,7 +42,7 @@ public class ProductsServiceTest {
 
     @Test
     public void testParsesCsvInAffiliateWindowFormat() throws IOException {
-        List<Clothing> products = productsService.getClothingFrom(new Products(generateCsvFile("affiliatewindow.csv"), true));
+        List<Clothing> products = productsService.getClothingFrom(new ProductsForm(generateCsvFile("affiliatewindow.csv"), true));
 
         List<Clothing> expectedProducts = Lists.newArrayList(new Clothing("id123", "A Test Brand", "Test Item", 10000, "a_link.html", "image.jpg", Sets.newHashSet("A", "Tag", "Another")),
                 new Clothing("id456", "Another Day", "Another Dollar", 200, "different_link", "image2.jpg", Sets.newHashSet("Different", "Tag")));
@@ -51,6 +51,6 @@ public class ProductsServiceTest {
 
     @Test(expected = CsvFormatException.class)
     public void testGivesAnErrorWhenRequiredFieldsAreNotPresentInAffiliateWindowCsv() throws IOException {
-        productsService.getClothingFrom(new Products(generateCsvFile("affiliatewindow-no-brand.csv"), true));
+        productsService.getClothingFrom(new ProductsForm(generateCsvFile("affiliatewindow-no-brand.csv"), true));
     }
 }

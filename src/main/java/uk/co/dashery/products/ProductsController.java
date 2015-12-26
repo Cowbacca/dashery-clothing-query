@@ -24,14 +24,14 @@ public class ProductsController {
 
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public String productsForm(Model model) {
-        model.addAttribute("products", new Products());
+        model.addAttribute("products", new ProductsForm());
         return "products";
     }
 
     @RequestMapping(value = "/products", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
-    public void ingestProducts(@ModelAttribute Products products) throws IOException {
-        List<Clothing> clothing = productsService.getClothingFrom(products);
+    public void ingestProducts(@ModelAttribute ProductsForm productsForm) throws IOException {
+        List<Clothing> clothing = productsService.getClothingFrom(productsForm);
         clothingService.create(clothing);
     }
 }

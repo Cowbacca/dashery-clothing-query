@@ -18,7 +18,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import static uk.co.dashery.ClothingTestUtils.createClothing;
 import static uk.co.dashery.ClothingTestUtils.generateCsvFile;
 
-public class ProductsControllerTest {
+public class ProductsFormControllerTest {
 
     @InjectMocks
     private ProductsController productsController;
@@ -45,7 +45,7 @@ public class ProductsControllerTest {
     public void testIngestsProducts() throws Exception {
         List<Clothing> clothing = createClothing();
 
-        productsController.ingestProducts(new Products(generateCsvFile("test.csv")));
+        productsController.ingestProducts(new ProductsForm(generateCsvFile("test.csv")));
 
         verify(clothingService).create(clothing);
     }
@@ -55,6 +55,6 @@ public class ProductsControllerTest {
         ExtendedModelMap model = new ExtendedModelMap();
         productsController.productsForm(model);
 
-        assertThat(model.containsValue(new Products()), is(true));
+        assertThat(model.containsValue(new ProductsForm()), is(true));
     }
 }

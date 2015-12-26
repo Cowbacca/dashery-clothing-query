@@ -9,12 +9,12 @@ import java.io.IOException;
 import java.util.List;
 
 public abstract class ClothingCsvParser<T extends RowProcessor> {
-    public List<Clothing> parse(Products products) throws IOException {
+    public List<Clothing> parse(ProductsForm productsForm) throws IOException {
         T rowProcessor = getRowProcessor();
 
         CsvParser parser = createCsvParser(rowProcessor);
 
-        parser.parse(products.generateReader());
+        parser.parse(productsForm.generateReader());
 
         return getClothing(rowProcessor);
     }
