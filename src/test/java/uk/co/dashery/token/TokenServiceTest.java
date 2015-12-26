@@ -3,13 +3,13 @@ package uk.co.dashery.token;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 import uk.co.dashery.DasheryClothingQueryIntegrationTest;
 import uk.co.dashery.clothing.Clothing;
 
+import javax.inject.Inject;
 import java.util.List;
 
 import static org.mockito.Mockito.reset;
@@ -20,10 +20,10 @@ import static uk.co.dashery.ClothingTestUtils.createClothing;
 @DasheryClothingQueryIntegrationTest
 public class TokenServiceTest {
 
-    @Autowired
+    @Inject
     private TokenService tokenService;
 
-    @Autowired
+    @Inject
     private RestTemplate restTemplate;
     @Value("${dashery.autocomplete.url}")
     private String autocompleteURL;

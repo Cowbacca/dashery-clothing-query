@@ -1,18 +1,18 @@
 package uk.co.dashery.clothing;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uk.co.dashery.token.TokenService;
 
+import javax.inject.Inject;
 import java.util.List;
 
 @Service
 public class ClothingService {
 
     public static final String SEPARATOR = ",";
-    @Autowired
+    @Inject
     private ClothingRepository clothingRepository;
-    @Autowired
+    @Inject
     private TokenService tokenService;
 
     public List<Clothing> search(String search) {

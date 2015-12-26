@@ -1,16 +1,16 @@
 package uk.co.dashery.productfeed;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.inject.Inject;
 import java.io.IOException;
 
 @Component
 public class ProductFeedFactory {
 
-    @Autowired
+    @Inject
     private DasheryClothingCsvParser dasheryClothingCsvParser;
-    @Autowired
+    @Inject
     private AffiliateWindowClothingCsvParser affiliateWindowClothingCsvParser;
 
     public ProductFeed create(ProductFeedForm productFeedForm) throws IOException {
