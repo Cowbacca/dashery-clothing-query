@@ -22,12 +22,10 @@ public class ProductFeedFactory {
     }
 
     private ClothingCsvParser getClothingCsvParser(ProductFeedForm productFeedForm) {
-        ClothingCsvParser clothingCsvParser;
         if (productFeedForm.isAffiliateWindowFormat()) {
-            clothingCsvParser = affiliateWindowClothingCsvParser;
+            return affiliateWindowClothingCsvParser;
         } else {
-            clothingCsvParser = dasheryClothingCsvParser;
+            return dasheryClothingCsvParser;
         }
-        return clothingCsvParser;
     }
 }
