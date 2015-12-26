@@ -8,23 +8,14 @@ import java.util.List;
 
 public class Products {
     private final Reader reader;
-    private final boolean isAffiliateWindowFormat;
-    private DasheryClothingCsvParser dasheryClothingCsvParser;
-    private AffiliateWindowClothingCsvParser affiliateWindowClothingCsvParser;
+    private final ClothingCsvParser clothingCsvParser;
 
-    public Products(Reader reader, boolean isAffiliateWindowFormat, DasheryClothingCsvParser dasheryClothingCsvParser,
-                    AffiliateWindowClothingCsvParser affiliateWindowClothingCsvParser) {
+    public Products(Reader reader, ClothingCsvParser clothingCsvParser) {
         this.reader = reader;
-        this.isAffiliateWindowFormat = isAffiliateWindowFormat;
-        this.dasheryClothingCsvParser = dasheryClothingCsvParser;
-        this.affiliateWindowClothingCsvParser = affiliateWindowClothingCsvParser;
+        this.clothingCsvParser = clothingCsvParser;
     }
 
     public List<Clothing> getClothing() throws IOException {
-        if (isAffiliateWindowFormat) {
-            return affiliateWindowClothingCsvParser.parse(reader);
-        } else {
-            return dasheryClothingCsvParser.parse(reader);
-        }
+        return clothingCsvParser.parse(reader);
     }
 }

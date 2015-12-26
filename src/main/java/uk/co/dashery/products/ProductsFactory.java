@@ -14,7 +14,16 @@ public class ProductsFactory {
     private AffiliateWindowClothingCsvParser affiliateWindowClothingCsvParser;
 
     public Products create(ProductsForm productsForm) throws IOException {
-        return new Products(productsForm.generateReader(), productsForm.isAffiliateWindowFormat(),
-                dasheryClothingCsvParser, affiliateWindowClothingCsvParser);
+        return new Products(productsForm.generateReader(), getClothingCsvParser(productsForm));
+    }
+
+    private ClothingCsvParser getClothingCsvParser(ProductsForm productsForm) {
+        ClothingCsvParser clothingCsvParser;
+        if (productsForm.isAffiliateWindowFormat()) {
+            clothingCsvParser = affiliateWindowClothingCsvParser;
+        } else {
+            clothingCsvParser = dasheryClothingCsvParser;
+        }
+        return clothingCsvParser;
     }
 }
