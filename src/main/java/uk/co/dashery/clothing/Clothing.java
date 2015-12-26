@@ -39,7 +39,8 @@ public class Clothing {
         this(id, null, null, 0, null, null, null);
     }
 
-    public Clothing(String id, String brand, String name, int price, String link, String imageLink, Set<String> tags) {
+    public Clothing(String id, String brand, String name, int price, String link, String
+            imageLink, Set<String> tags) {
         this.id = id;
         this.setBrand(brand);
         this.setName(name);
@@ -58,12 +59,18 @@ public class Clothing {
 
         if (getPrice() != clothing.getPrice()) return false;
         if (id != null ? !id.equals(clothing.id) : clothing.id != null) return false;
-        if (getBrand() != null ? !getBrand().equals(clothing.getBrand()) : clothing.getBrand() != null) return false;
-        if (getName() != null ? !getName().equals(clothing.getName()) : clothing.getName() != null) return false;
-        if (getLink() != null ? !getLink().equals(clothing.getLink()) : clothing.getLink() != null) return false;
-        if (getImageLink() != null ? !getImageLink().equals(clothing.getImageLink()) : clothing.getImageLink() != null)
+        if (getBrand() != null ? !getBrand().equals(clothing.getBrand()) : clothing.getBrand() !=
+                null)
             return false;
-        return !(getTags() != null ? !getTags().equals(clothing.getTags()) : clothing.getTags() != null);
+        if (getName() != null ? !getName().equals(clothing.getName()) : clothing.getName() != null)
+            return false;
+        if (getLink() != null ? !getLink().equals(clothing.getLink()) : clothing.getLink() != null)
+            return false;
+        if (getImageLink() != null ? !getImageLink().equals(clothing.getImageLink()) : clothing
+                .getImageLink() != null)
+            return false;
+        return !(getTags() != null ? !getTags().equals(clothing.getTags()) : clothing.getTags()
+                != null);
 
     }
 

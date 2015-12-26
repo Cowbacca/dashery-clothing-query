@@ -22,7 +22,8 @@ public class ProductFeedTest {
     @Spy
     private DasheryClothingCsvParser dasheryClothingCsvParser = new DasheryClothingCsvParser();
     @Spy
-    private AffiliateWindowClothingCsvParser affiliateWindowClothingCsvParser = new AffiliateWindowClothingCsvParser();
+    private AffiliateWindowClothingCsvParser affiliateWindowClothingCsvParser = new
+            AffiliateWindowClothingCsvParser();
 
     @InjectMocks
     private ProductFeedFactory productFeedFactory;
@@ -34,7 +35,8 @@ public class ProductFeedTest {
 
     @Test
     public void testParsesCsvInDasheryFormat() throws Exception {
-        ProductFeed productFeed = productFeedFactory.create(new ProductFeedForm(generateCsvFile("test.csv"), false));
+        ProductFeed productFeed = productFeedFactory.create(new ProductFeedForm(generateCsvFile
+                ("test.csv"), false));
 
         List<Clothing> clothing = productFeed.getClothing();
 
@@ -44,21 +46,25 @@ public class ProductFeedTest {
 
     @Test
     public void testParsesCsvInAffiliateWindowFormat() throws IOException {
-        ProductFeed productFeed = productFeedFactory.create(new ProductFeedForm(generateCsvFile("affiliatewindow.csv"),
+        ProductFeed productFeed = productFeedFactory.create(new ProductFeedForm(generateCsvFile
+                ("affiliatewindow.csv"),
                 true));
 
         List<Clothing> clothing = productFeed.getClothing();
 
         List<Clothing> expectedClothing = Lists.newArrayList(
-                new Clothing("id123", "A Test Brand", "Test Item", 10000, "a_link.html", "image.jpg",
+                new Clothing("id123", "A Test Brand", "Test Item", 10000, "a_link.html", "image" +
+                        ".jpg",
                         Sets.newHashSet("A", "Tag", "Another")),
-                new Clothing("id456", "Another Day", "Another Dollar", 200, "different_link", "image2.jpg",
+                new Clothing("id456", "Another Day", "Another Dollar", 200, "different_link",
+                        "image2.jpg",
                         Sets.newHashSet("Different", "Tag")));
         assertThat(clothing, is(expectedClothing));
     }
 
     @Test(expected = CsvFormatException.class)
-    public void testGivesAnErrorWhenRequiredFieldsAreNotPresentInAffiliateWindowCsv() throws IOException {
+    public void testGivesAnErrorWhenRequiredFieldsAreNotPresentInAffiliateWindowCsv() throws
+            IOException {
         ProductFeed productFeed = productFeedFactory.create(
                 new ProductFeedForm(generateCsvFile("affiliatewindow-no-brand.csv"), true));
 

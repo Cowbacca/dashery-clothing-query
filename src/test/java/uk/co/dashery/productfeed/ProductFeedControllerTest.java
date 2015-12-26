@@ -30,7 +30,8 @@ public class ProductFeedControllerTest {
     @Spy
     private DasheryClothingCsvParser dasheryClothingCsvParser = new DasheryClothingCsvParser();
     @Spy
-    private AffiliateWindowClothingCsvParser affiliateWindowClothingCsvParser = new AffiliateWindowClothingCsvParser();
+    private AffiliateWindowClothingCsvParser affiliateWindowClothingCsvParser = new
+            AffiliateWindowClothingCsvParser();
 
 
     @Mock

@@ -14,7 +14,8 @@ public class ProductFeedFactory {
     private AffiliateWindowClothingCsvParser affiliateWindowClothingCsvParser;
 
     public ProductFeed create(ProductFeedForm productFeedForm) throws IOException {
-        return new ProductFeed(productFeedForm.generateReader(), getClothingCsvParser(productFeedForm));
+        return new ProductFeed(productFeedForm.generateReader(), getClothingCsvParser
+                (productFeedForm));
     }
 
     private ClothingCsvParser getClothingCsvParser(ProductFeedForm productFeedForm) {

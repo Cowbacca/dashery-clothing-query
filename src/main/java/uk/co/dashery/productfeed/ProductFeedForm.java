@@ -72,7 +72,8 @@ public class ProductFeedForm {
         ProductFeedForm productFeedForm = (ProductFeedForm) o;
 
         if (usingUrl != productFeedForm.usingUrl) return false;
-        if (url != null ? !url.equals(productFeedForm.url) : productFeedForm.url != null) return false;
+        if (url != null ? !url.equals(productFeedForm.url) : productFeedForm.url != null)
+            return false;
         return !(file != null ? !file.equals(productFeedForm.file) : productFeedForm.file != null);
 
     }

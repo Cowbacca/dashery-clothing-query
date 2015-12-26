@@ -20,6 +20,7 @@ public class TokenService {
     private RestTemplate restTemplate;
 
     public void createFromClothing(List<Clothing> clothing) {
-        restTemplate.postForEntity(autocompleteURL + tokenCreationEndpoint, clothing, Clothing.class);
+        restTemplate.postForEntity(autocompleteURL + tokenCreationEndpoint, clothing, Clothing
+                .class);
     }
 }

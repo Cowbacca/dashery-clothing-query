@@ -31,7 +31,8 @@ public class ClothingControllerIT {
 
     @Before
     public void setUp() throws Exception {
-        bananaAppleClothing = generateClothing("id123", "Test Brand", "Test Name", 100, "Banana", "Apple");
+        bananaAppleClothing = generateClothing("id123", "Test Brand", "Test Name", 100, "Banana",
+                "Apple");
         justBananaClothing = generateClothing("id456", "Test Brand", "Test Name", 100, "Banana");
         clothingRepository.insert(Lists.newArrayList(bananaAppleClothing, justBananaClothing));
     }
@@ -43,13 +44,15 @@ public class ClothingControllerIT {
 
     @Test
     public void testSearchForClothing() throws Exception {
-        List<Clothing> clothingWithBananaTag = Lists.newArrayList(bananaAppleClothing, justBananaClothing);
+        List<Clothing> clothingWithBananaTag = Lists.newArrayList(bananaAppleClothing,
+                justBananaClothing);
 
         assertThat(clothingController.clothing("Banana"), is(clothingWithBananaTag));
     }
 
     @Test
     public void testSearchForClothingWithTwoTags() {
-        assertThat(clothingController.clothing("Banana,Apple"), is(Lists.newArrayList(bananaAppleClothing)));
+        assertThat(clothingController.clothing("Banana,Apple"), is(Lists.newArrayList
+                (bananaAppleClothing)));
     }
 }

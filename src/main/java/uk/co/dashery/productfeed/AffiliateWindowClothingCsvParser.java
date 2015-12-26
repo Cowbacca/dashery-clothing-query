@@ -24,12 +24,15 @@ public class AffiliateWindowClothingCsvParser extends ClothingCsvParser<RowListP
 
     AffiliateWindowClothingCsvParser() {
         nameToConversionMap = new HashMap<>();
-        nameToConversionMap.put("search_price", (clothing, price) -> clothing.setPrice(Integer.parseInt(price.replace(".", ""))));
-        nameToConversionMap.put("description", (clothing, description) -> clothing.setTags(Sets.newHashSet(description.split(" "))));
+        nameToConversionMap.put("search_price", (clothing, price) -> clothing.setPrice(Integer
+                .parseInt(price.replace(".", ""))));
+        nameToConversionMap.put("description", (clothing, description) -> clothing.setTags(Sets
+                .newHashSet(description.split(" "))));
         nameToConversionMap.put("merchant_name", (clothing, brand) -> clothing.setBrand(brand));
         nameToConversionMap.put("product_name", (clothing, name) -> clothing.setName(name));
         nameToConversionMap.put("aw_deep_link", (clothing, link) -> clothing.setLink(link));
-        nameToConversionMap.put("merchant_image_url", (clothing, imageLink) -> clothing.setImageLink(imageLink));
+        nameToConversionMap.put("merchant_image_url", (clothing, imageLink) -> clothing
+                .setImageLink(imageLink));
         nameToConversionMap.put("merchant_product_id", (clothing, id) -> clothing.setId(id));
     }
 
@@ -47,7 +50,8 @@ public class AffiliateWindowClothingCsvParser extends ClothingCsvParser<RowListP
                 .collect(Collectors.toMap(i -> headers[i], i -> i));
     }
 
-    private List<Clothing> generateClothingFromRows(RowListProcessor rowProcessor, Map<String, Integer> nameToIndexMap) {
+    private List<Clothing> generateClothingFromRows(RowListProcessor rowProcessor, Map<String,
+            Integer> nameToIndexMap) {
         return rowProcessor.getRows()
                 .stream()
                 .map(row -> {
