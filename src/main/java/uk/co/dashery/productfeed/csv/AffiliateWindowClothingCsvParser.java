@@ -22,7 +22,7 @@ public class AffiliateWindowClothingCsvParser extends ClothingCsvParser<RowListP
 
     private final Map<String, BiConsumer<Clothing, String>> nameToConversionMap;
 
-    AffiliateWindowClothingCsvParser() {
+    public AffiliateWindowClothingCsvParser() {
         nameToConversionMap = new HashMap<>();
         nameToConversionMap.put("search_price", (clothing, price) -> clothing.setPrice(Integer
                 .parseInt(price.replace(".", ""))));
