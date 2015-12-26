@@ -1,4 +1,4 @@
-package uk.co.dashery.conversion;
+package uk.co.dashery.productfeed.csv;
 
 import com.google.common.collect.Sets;
 import com.univocity.parsers.conversions.Conversion;
