@@ -5,11 +5,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.co.dashery.DasheryClothingQueryIntegrationTest;
 
+import javax.inject.Inject;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
@@ -20,11 +20,11 @@ import static uk.co.dashery.ClothingTestUtils.generateClothing;
 @DasheryClothingQueryIntegrationTest
 public class ClothingControllerIT {
 
-    @Autowired
+    @Inject
     private MongoTemplate mongoTemplate;
-    @Autowired
+    @Inject
     private ClothingRepository clothingRepository;
-    @Autowired
+    @Inject
     private ClothingController clothingController;
     private Clothing bananaAppleClothing;
     private Clothing justBananaClothing;

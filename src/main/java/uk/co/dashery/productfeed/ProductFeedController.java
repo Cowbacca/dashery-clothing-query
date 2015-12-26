@@ -1,6 +1,5 @@
 package uk.co.dashery.productfeed;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,15 +10,16 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import uk.co.dashery.clothing.Clothing;
 import uk.co.dashery.clothing.ClothingService;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.util.List;
 
 @Controller
 public class ProductFeedController {
 
-    @Autowired
+    @Inject
     private ProductFeedFactory productFeedFactory;
-    @Autowired
+    @Inject
     private ClothingService clothingService;
 
     @RequestMapping(value = "/productFeed", method = RequestMethod.GET)

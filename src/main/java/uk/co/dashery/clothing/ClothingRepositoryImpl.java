@@ -1,14 +1,14 @@
 package uk.co.dashery.clothing;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
+import javax.inject.Inject;
 import java.util.List;
 
 public class ClothingRepositoryImpl implements ClothingRepositoryCustom {
-    @Autowired
+    @Inject
     private MongoOperations mongoOperations;
 
     @Override

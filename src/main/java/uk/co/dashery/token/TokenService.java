@@ -1,11 +1,11 @@
 package uk.co.dashery.token;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import uk.co.dashery.clothing.Clothing;
 
+import javax.inject.Inject;
 import java.util.List;
 
 @Service
@@ -16,7 +16,7 @@ public class TokenService {
     @Value("${dashery.autocomplete.creation.endpoint}")
     private String tokenCreationEndpoint;
 
-    @Autowired
+    @Inject
     private RestTemplate restTemplate;
 
     public void createFromClothing(List<Clothing> clothing) {

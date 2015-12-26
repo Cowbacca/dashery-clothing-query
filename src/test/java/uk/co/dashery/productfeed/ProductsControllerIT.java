@@ -3,13 +3,13 @@ package uk.co.dashery.productfeed;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.co.dashery.DasheryClothingQueryIntegrationTest;
 import uk.co.dashery.clothing.Clothing;
 import uk.co.dashery.clothing.ClothingRepository;
 
+import javax.inject.Inject;
 import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -20,14 +20,13 @@ import static uk.co.dashery.ClothingTestUtils.generateCsvFile;
 @DasheryClothingQueryIntegrationTest
 public class ProductsControllerIT {
 
-    @Autowired
+    @Inject
     private MongoTemplate mongoTemplate;
 
-    @Autowired
+    @Inject
     private ProductFeedController productFeedController;
-    @Autowired
+    @Inject
     private ClothingRepository clothingRepository;
-
 
     @After
     public void tearDown() throws Exception {
