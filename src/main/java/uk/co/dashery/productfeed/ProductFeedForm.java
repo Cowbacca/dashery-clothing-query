@@ -1,11 +1,11 @@
-package uk.co.dashery.products;
+package uk.co.dashery.productfeed;
 
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.net.URL;
 
-public class ProductsForm {
+public class ProductFeedForm {
 
     private boolean usingUrl;
     private String url;
@@ -14,20 +14,20 @@ public class ProductsForm {
 
     private boolean isAffiliateWindowFormat;
 
-    public ProductsForm() {
+    public ProductFeedForm() {
     }
 
-    public ProductsForm(String url) {
+    public ProductFeedForm(String url) {
         this.usingUrl = true;
         this.url = url;
     }
 
-    public ProductsForm(MultipartFile file) {
+    public ProductFeedForm(MultipartFile file) {
         this.usingUrl = false;
         this.file = file;
     }
 
-    public ProductsForm(MultipartFile file, boolean isAffiliateWindowFormat) {
+    public ProductFeedForm(MultipartFile file, boolean isAffiliateWindowFormat) {
         this.file = file;
         this.isAffiliateWindowFormat = isAffiliateWindowFormat;
     }
@@ -69,11 +69,11 @@ public class ProductsForm {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ProductsForm productsForm = (ProductsForm) o;
+        ProductFeedForm productFeedForm = (ProductFeedForm) o;
 
-        if (usingUrl != productsForm.usingUrl) return false;
-        if (url != null ? !url.equals(productsForm.url) : productsForm.url != null) return false;
-        return !(file != null ? !file.equals(productsForm.file) : productsForm.file != null);
+        if (usingUrl != productFeedForm.usingUrl) return false;
+        if (url != null ? !url.equals(productFeedForm.url) : productFeedForm.url != null) return false;
+        return !(file != null ? !file.equals(productFeedForm.file) : productFeedForm.file != null);
 
     }
 

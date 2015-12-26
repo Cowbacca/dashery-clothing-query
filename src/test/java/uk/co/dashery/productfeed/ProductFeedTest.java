@@ -1,4 +1,4 @@
-package uk.co.dashery.products;
+package uk.co.dashery.productfeed;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -17,7 +17,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import static uk.co.dashery.ClothingTestUtils.createClothing;
 import static uk.co.dashery.ClothingTestUtils.generateCsvFile;
 
-public class ProductsTest {
+public class ProductFeedTest {
 
     @Spy
     private DasheryClothingCsvParser dasheryClothingCsvParser = new DasheryClothingCsvParser();
@@ -25,7 +25,7 @@ public class ProductsTest {
     private AffiliateWindowClothingCsvParser affiliateWindowClothingCsvParser = new AffiliateWindowClothingCsvParser();
 
     @InjectMocks
-    private ProductsFactory productsFactory;
+    private ProductFeedFactory productFeedFactory;
 
     @Before
     public void setUp() throws Exception {
@@ -34,9 +34,9 @@ public class ProductsTest {
 
     @Test
     public void testParsesCsvInDasheryFormat() throws Exception {
-        Products products = productsFactory.create(new ProductsForm(generateCsvFile("test.csv"), false));
+        ProductFeed productFeed = productFeedFactory.create(new ProductFeedForm(generateCsvFile("test.csv"), false));
 
-        List<Clothing> clothing = products.getClothing();
+        List<Clothing> clothing = productFeed.getClothing();
 
         List<Clothing> expectedClothing = createClothing();
         assertThat(clothing, is(expectedClothing));
@@ -44,10 +44,10 @@ public class ProductsTest {
 
     @Test
     public void testParsesCsvInAffiliateWindowFormat() throws IOException {
-        Products products = productsFactory.create(new ProductsForm(generateCsvFile("affiliatewindow.csv"),
+        ProductFeed productFeed = productFeedFactory.create(new ProductFeedForm(generateCsvFile("affiliatewindow.csv"),
                 true));
 
-        List<Clothing> clothing = products.getClothing();
+        List<Clothing> clothing = productFeed.getClothing();
 
         List<Clothing> expectedClothing = Lists.newArrayList(
                 new Clothing("id123", "A Test Brand", "Test Item", 10000, "a_link.html", "image.jpg",
@@ -59,9 +59,9 @@ public class ProductsTest {
 
     @Test(expected = CsvFormatException.class)
     public void testGivesAnErrorWhenRequiredFieldsAreNotPresentInAffiliateWindowCsv() throws IOException {
-        Products products = productsFactory.create(
-                new ProductsForm(generateCsvFile("affiliatewindow-no-brand.csv"), true));
+        ProductFeed productFeed = productFeedFactory.create(
+                new ProductFeedForm(generateCsvFile("affiliatewindow-no-brand.csv"), true));
 
-        List<Clothing> clothing = products.getClothing();
+        List<Clothing> clothing = productFeed.getClothing();
     }
 }

@@ -1,4 +1,4 @@
-package uk.co.dashery.products;
+package uk.co.dashery.productfeed;
 
 import uk.co.dashery.clothing.Clothing;
 
@@ -6,11 +6,11 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
 
-public class Products {
+public class ProductFeed {
     private final Reader reader;
     private final ClothingCsvParser clothingCsvParser;
 
-    public Products(Reader reader, ClothingCsvParser clothingCsvParser) {
+    public ProductFeed(Reader reader, ClothingCsvParser clothingCsvParser) {
         this.reader = reader;
         this.clothingCsvParser = clothingCsvParser;
     }

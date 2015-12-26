@@ -1,4 +1,4 @@
-package uk.co.dashery.products;
+package uk.co.dashery.productfeed;
 
 import com.univocity.parsers.common.processor.RowProcessor;
 import com.univocity.parsers.csv.CsvParser;
