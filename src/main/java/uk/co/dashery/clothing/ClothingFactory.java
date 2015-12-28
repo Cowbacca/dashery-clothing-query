@@ -29,7 +29,11 @@ public class ClothingFactory {
     }
 
     private HashSet<String> getTags(Product product) {
-        String[] tags = product.getDescription().split(" ");
-        return Sets.newHashSet(tags);
+        if (product.getDescription() != null) {
+            String[] tags = product.getDescription().split(" ");
+            return Sets.newHashSet(tags);
+        } else {
+            return Sets.newHashSet();
+        }
     }
 }
