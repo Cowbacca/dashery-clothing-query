@@ -1,15 +1,12 @@
 package uk.co.dashery.productfeed;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Spy;
-import uk.co.dashery.clothing.Clothing;
-import uk.co.dashery.productfeed.csv.AffiliateWindowClothingCsvParser;
+import uk.co.dashery.productfeed.csv.AffiliateWindowProductCsvParser;
 import uk.co.dashery.productfeed.csv.CsvFormatException;
-import uk.co.dashery.productfeed.csv.DasheryClothingCsvParser;
+import uk.co.dashery.productfeed.csv.DasheryProductCsvParser;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,16 +14,16 @@ import java.util.List;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
-import static uk.co.dashery.ClothingTestUtils.createClothing;
 import static uk.co.dashery.ClothingTestUtils.generateCsvFile;
+import static uk.co.dashery.productfeed.ProductFeedUtils.expectedProducts;
 
 public class ProductFeedTest {
 
     @Spy
-    private DasheryClothingCsvParser dasheryClothingCsvParser = new DasheryClothingCsvParser();
+    private DasheryProductCsvParser dasheryClothingCsvParser = new DasheryProductCsvParser();
     @Spy
-    private AffiliateWindowClothingCsvParser affiliateWindowClothingCsvParser = new
-            AffiliateWindowClothingCsvParser();
+    private AffiliateWindowProductCsvParser affiliateWindowProductCsvParser = new
+            AffiliateWindowProductCsvParser();
 
     @InjectMocks
     private ProductFeedFactory productFeedFactory;
@@ -41,10 +38,9 @@ public class ProductFeedTest {
         ProductFeed productFeed = productFeedFactory.create(new ProductFeedForm(generateCsvFile
                 ("test.csv"), false));
 
-        List<Clothing> clothing = productFeed.getClothing();
+        List<Product> products = productFeed.getProducts();
 
-        List<Clothing> expectedClothing = createClothing();
-        assertThat(clothing, is(expectedClothing));
+        assertThat(products, is(expectedProducts()));
     }
 
     @Test
@@ -53,16 +49,9 @@ public class ProductFeedTest {
                 ("affiliatewindow.csv"),
                 true));
 
-        List<Clothing> clothing = productFeed.getClothing();
+        List<Product> products = productFeed.getProducts();
 
-        List<Clothing> expectedClothing = Lists.newArrayList(
-                new Clothing("id123", "A Test Brand", "Test Item", 10000, "a_link.html", "image" +
-                        ".jpg",
-                        Sets.newHashSet("A", "Tag", "Another")),
-                new Clothing("id456", "Another Day", "Another Dollar", 200, "different_link",
-                        "image2.jpg",
-                        Sets.newHashSet("Different", "Tag")));
-        assertThat(clothing, is(expectedClothing));
+        assertThat(products, is(expectedProducts()));
     }
 
     @Test(expected = CsvFormatException.class)
@@ -71,6 +60,6 @@ public class ProductFeedTest {
         ProductFeed productFeed = productFeedFactory.create(
                 new ProductFeedForm(generateCsvFile("affiliatewindow-no-brand.csv"), true));
 
-        List<Clothing> clothing = productFeed.getClothing();
+        productFeed.getProducts();
     }
 }

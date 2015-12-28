@@ -6,19 +6,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.springframework.ui.ExtendedModelMap;
-import uk.co.dashery.clothing.Clothing;
-import uk.co.dashery.clothing.ClothingService;
-import uk.co.dashery.productfeed.csv.AffiliateWindowClothingCsvParser;
-import uk.co.dashery.productfeed.csv.DasheryClothingCsvParser;
-
-import java.util.List;
+import uk.co.dashery.clothing.ClothingController;
+import uk.co.dashery.productfeed.csv.AffiliateWindowProductCsvParser;
+import uk.co.dashery.productfeed.csv.DasheryProductCsvParser;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
-import static uk.co.dashery.ClothingTestUtils.createClothing;
 import static uk.co.dashery.ClothingTestUtils.generateCsvFile;
+import static uk.co.dashery.productfeed.ProductFeedUtils.expectedProducts;
 
 public class ProductFeedControllerTest {
 
@@ -30,14 +27,14 @@ public class ProductFeedControllerTest {
     private ProductFeedFactory productFeedFactory = new ProductFeedFactory();
 
     @Spy
-    private DasheryClothingCsvParser dasheryClothingCsvParser = new DasheryClothingCsvParser();
+    private DasheryProductCsvParser dasheryClothingCsvParser = new DasheryProductCsvParser();
     @Spy
-    private AffiliateWindowClothingCsvParser affiliateWindowClothingCsvParser = new
-            AffiliateWindowClothingCsvParser();
+    private AffiliateWindowProductCsvParser affiliateWindowProductCsvParser = new
+            AffiliateWindowProductCsvParser();
 
 
     @Mock
-    private ClothingService clothingService;
+    private ClothingController clothingController;
 
     @Before
     public void setUp() {
@@ -46,11 +43,9 @@ public class ProductFeedControllerTest {
 
     @Test
     public void testIngestsProducts() throws Exception {
-        List<Clothing> clothing = createClothing();
-
         productFeedController.ingestProducts(new ProductFeedForm(generateCsvFile("test.csv")));
 
-        verify(clothingService).create(clothing);
+        verify(clothingController).createFrom(expectedProducts());
     }
 
     @Test

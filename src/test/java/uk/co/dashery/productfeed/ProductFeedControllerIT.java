@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.co.dashery.DasheryClothingQueryIntegrationTest;
 import uk.co.dashery.clothing.Clothing;
-import uk.co.dashery.clothing.ClothingRepository;
+import uk.co.dashery.clothing.ClothingController;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -26,7 +26,7 @@ public class ProductFeedControllerIT {
     @Inject
     private ProductFeedController productFeedController;
     @Inject
-    private ClothingRepository clothingRepository;
+    private ClothingController clothingController;
 
     @After
     public void tearDown() throws Exception {
@@ -36,14 +36,14 @@ public class ProductFeedControllerIT {
     @Test
     public void testUpdatesClothingRatherThanDuplicates() throws IOException {
         productFeedController.ingestProducts(new ProductFeedForm(generateCsvFile("test.csv")));
-        assertThat(firstClothingWithTagNamedATag().getPrice(), is(100));
+        assertThat(firstClothingWithTagNamedSome().getPrice(), is(10000));
 
         productFeedController.ingestProducts(new ProductFeedForm(generateCsvFile("test-updated" +
                 ".csv")));
-        assertThat(firstClothingWithTagNamedATag().getPrice(), is(150));
+        assertThat(firstClothingWithTagNamedSome().getPrice(), is(150));
     }
 
-    private Clothing firstClothingWithTagNamedATag() {
-        return clothingRepository.findByAllTagsIn("A Tag").get(0);
+    private Clothing firstClothingWithTagNamedSome() {
+        return clothingController.clothing("Some").get(0);
     }
 }

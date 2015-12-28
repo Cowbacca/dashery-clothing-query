@@ -1,9 +1,8 @@
 package uk.co.dashery.productfeed.csv;
 
-import com.google.common.collect.Sets;
 import com.univocity.parsers.common.processor.RowListProcessor;
 import org.springframework.stereotype.Component;
-import uk.co.dashery.clothing.Clothing;
+import uk.co.dashery.productfeed.Product;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,34 +12,32 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Component
-public class AffiliateWindowClothingCsvParser extends ClothingCsvParser<RowListProcessor> {
+public class AffiliateWindowProductCsvParser extends ProductCsvParser<RowListProcessor> {
 
     @Override
     protected RowListProcessor getRowProcessor() {
         return new RowListProcessor();
     }
 
-    private final Map<String, BiConsumer<Clothing, String>> nameToConversionMap;
+    private final Map<String, BiConsumer<Product, String>> nameToConversionMap;
 
-    public AffiliateWindowClothingCsvParser() {
+    public AffiliateWindowProductCsvParser() {
         nameToConversionMap = new HashMap<>();
         nameToConversionMap.put("search_price", (clothing, price) -> clothing.setPrice(Integer
                 .parseInt(price.replace(".", ""))));
-        nameToConversionMap.put("description", (clothing, description) -> clothing.setTags(Sets
-                .newHashSet(description.split(" "))));
-        nameToConversionMap.put("merchant_name", (clothing, brand) -> clothing.setBrand(brand));
-        nameToConversionMap.put("product_name", (clothing, name) -> clothing.setName(name));
-        nameToConversionMap.put("aw_deep_link", (clothing, link) -> clothing.setLink(link));
-        nameToConversionMap.put("merchant_image_url", (clothing, imageLink) -> clothing
-                .setImageLink(imageLink));
-        nameToConversionMap.put("merchant_product_id", (clothing, id) -> clothing.setId(id));
+        nameToConversionMap.put("description", Product::setDescription);
+        nameToConversionMap.put("merchant_name", Product::setMerchant);
+        nameToConversionMap.put("product_name", Product::setName);
+        nameToConversionMap.put("aw_deep_link", Product::setLink);
+        nameToConversionMap.put("merchant_image_url", Product::setImageLink);
+        nameToConversionMap.put("merchant_product_id", Product::setId);
     }
 
     @Override
-    protected List<Clothing> getClothing(RowListProcessor rowProcessor) {
+    protected List<Product> getProducts(RowListProcessor rowProcessor) {
         Map<String, Integer> nameToIndexMap = generateNameToIndexMap(rowProcessor);
 
-        return generateClothingFromRows(rowProcessor, nameToIndexMap);
+        return generateProductsFromRows(rowProcessor, nameToIndexMap);
     }
 
     private Map<String, Integer> generateNameToIndexMap(RowListProcessor rowProcessor) {
@@ -50,12 +47,12 @@ public class AffiliateWindowClothingCsvParser extends ClothingCsvParser<RowListP
                 .collect(Collectors.toMap(i -> headers[i], i -> i));
     }
 
-    private List<Clothing> generateClothingFromRows(RowListProcessor rowProcessor, Map<String,
+    private List<Product> generateProductsFromRows(RowListProcessor rowProcessor, Map<String,
             Integer> nameToIndexMap) {
         return rowProcessor.getRows()
                 .stream()
                 .map(row -> {
-                    Clothing clothing = new Clothing();
+                    Product clothing = new Product();
                     nameToConversionMap.forEach((name, conversion) -> {
                         Integer index = getIndex(nameToIndexMap, name);
                         conversion.accept(clothing, row[index]);
