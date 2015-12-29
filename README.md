@@ -5,6 +5,9 @@ Finds clothes with given tags.
 ## Usage
 GET the */clothing/search?={value},{value}* endpoint to be given a JSON list of [Clothing objects](https://github.com/Cowbacca/dashery-clothing-query/blob/master/src/main/java/uk/co/dashery/data/Clothing.java) which have tags with the given values.
 
+## Developer Setup
+This project uses Lombok.  To add support for your IDE of choice, see this link: https://projectlombok.org/download.html
+
 ## Deployment
 
 Standard Spring Boot deployment.  Requires the following properties to be present in the environment, whether via yml/properties file or environment variable:
