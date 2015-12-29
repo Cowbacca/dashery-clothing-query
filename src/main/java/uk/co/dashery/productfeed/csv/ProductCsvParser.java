@@ -3,21 +3,21 @@ package uk.co.dashery.productfeed.csv;
 import com.univocity.parsers.common.processor.RowProcessor;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
-import uk.co.dashery.clothing.Clothing;
+import uk.co.dashery.productfeed.Product;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
 
-public abstract class ClothingCsvParser<T extends RowProcessor> {
-    public List<Clothing> parse(Reader csvReader) throws IOException {
+public abstract class ProductCsvParser<T extends RowProcessor> {
+    public List<Product> parse(Reader csvReader) throws IOException {
         T rowProcessor = getRowProcessor();
 
         CsvParser parser = createCsvParser(rowProcessor);
 
         parser.parse(csvReader);
 
-        return getClothing(rowProcessor);
+        return getProducts(rowProcessor);
     }
 
     protected abstract T getRowProcessor();
@@ -36,5 +36,5 @@ public abstract class ClothingCsvParser<T extends RowProcessor> {
         return parserSettings;
     }
 
-    protected abstract List<Clothing> getClothing(T rowProcessor);
+    protected abstract List<Product> getProducts(T rowProcessor);
 }

@@ -1,7 +1,6 @@
 package uk.co.dashery.productfeed;
 
-import uk.co.dashery.clothing.Clothing;
-import uk.co.dashery.productfeed.csv.ClothingCsvParser;
+import uk.co.dashery.productfeed.csv.ProductCsvParser;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -9,14 +8,14 @@ import java.util.List;
 
 public class ProductFeed {
     private final Reader reader;
-    private final ClothingCsvParser clothingCsvParser;
+    private final ProductCsvParser productCsvParser;
 
-    public ProductFeed(Reader reader, ClothingCsvParser clothingCsvParser) {
+    public ProductFeed(Reader reader, ProductCsvParser productCsvParser) {
         this.reader = reader;
-        this.clothingCsvParser = clothingCsvParser;
+        this.productCsvParser = productCsvParser;
     }
 
-    public List<Clothing> getClothing() throws IOException {
-        return clothingCsvParser.parse(reader);
+    public List<Product> getProducts() throws IOException {
+        return productCsvParser.parse(reader);
     }
 }

@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import uk.co.dashery.clothing.Clothing;
-import uk.co.dashery.clothing.ClothingService;
+import uk.co.dashery.clothing.ClothingController;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -20,7 +19,7 @@ public class ProductFeedController {
     @Inject
     private ProductFeedFactory productFeedFactory;
     @Inject
-    private ClothingService clothingService;
+    private ClothingController clothingController;
 
     @RequestMapping(value = "/productFeed", method = RequestMethod.GET)
     public String productsForm(Model model) {
@@ -32,7 +31,7 @@ public class ProductFeedController {
     @ResponseStatus(HttpStatus.OK)
     public void ingestProducts(@ModelAttribute ProductFeedForm productFeedForm) throws IOException {
         ProductFeed productFeed = productFeedFactory.create(productFeedForm);
-        List<Clothing> clothing = productFeed.getClothing();
-        clothingService.create(clothing);
+        List<Product> products = productFeed.getProducts();
+        clothingController.createFrom(products);
     }
 }

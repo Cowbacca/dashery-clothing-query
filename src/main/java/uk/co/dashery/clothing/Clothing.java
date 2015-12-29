@@ -3,10 +3,7 @@ package uk.co.dashery.clothing;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.univocity.parsers.annotations.Convert;
-import com.univocity.parsers.annotations.Parsed;
 import org.springframework.data.annotation.Id;
-import uk.co.dashery.productfeed.csv.DelimitedStringToSetConversion;
 
 import java.util.Set;
 
@@ -15,20 +12,12 @@ public class Clothing {
 
     @Id
     @JsonIgnore
-    @Parsed
     private String id;
-    @Parsed
     private String brand;
-    @Parsed
     private String name;
-    @Parsed
     private int price;
-    @Parsed
     private String link;
-    @Parsed
     private String imageLink;
-    @Parsed
-    @Convert(conversionClass = DelimitedStringToSetConversion.class, args = {";"})
     private Set<String> tags;
 
     public Clothing() {

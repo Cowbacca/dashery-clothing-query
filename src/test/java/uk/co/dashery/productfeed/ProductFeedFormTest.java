@@ -11,7 +11,7 @@ import static uk.co.dashery.ClothingTestUtils.generateCsvFile;
 
 public class ProductFeedFormTest {
 
-    public static final String FIRST_FIVE_LETTERS_OF_FILE = "id,br";
+    public static final String FIRST_FIVE_LETTERS_OF_FILE = "id,me";
 
     @Test
     public void testGeneratesReaderFromURL() throws IOException {

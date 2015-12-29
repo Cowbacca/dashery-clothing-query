@@ -68,7 +68,7 @@ public class AcceptanceTest {
     }
 
     private JsonObject whenASearchIsPerformedUsingATokenFromThisCsv() throws Exception {
-        String clothingJson = mockMvc.perform(get("/clothing").param("search", "Another"))
+        String clothingJson = mockMvc.perform(get("/clothing").param("search", "Some"))
                 .andReturn()
                 .getResponse()
                 .getContentAsString();

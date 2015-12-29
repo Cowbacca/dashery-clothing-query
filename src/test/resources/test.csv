@@ -1,3 +1,3 @@
-id,brand,name,price,link,imageLink,tags
-id123,Test Brand,Test Item,100,,,A Tag;Another Tag
-id456,Another Day,Another Dollar,200,,,Different Tag
+id,merchant,name,price,link,imageLink,description
+id123,A Test Brand,Test Item,10000,a_link.html,image.jpg,Some description or other.
+id456,Another Day,Another Dollar,200,different_link,image2.jpg,A different description.
