@@ -1,7 +1,11 @@
 package uk.co.dashery.clothing;
 
-import org.springframework.web.bind.annotation.*;
-import uk.co.dashery.productfeed.Product;
+import org.springframework.context.event.EventListener;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import uk.co.dashery.productfeed.ProductsCreatedEvent;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -20,9 +24,9 @@ public class ClothingController {
         return clothingService.search(search);
     }
 
-    @RequestMapping(value = "/fromProducts", method = RequestMethod.PUT)
-    public void createFrom(List<Product> products) {
-        List<Clothing> clothingList = clothingFactory.create(products);
+    @EventListener
+    public void handleProductsCreated(ProductsCreatedEvent productsCreatedEvent) {
+        List<Clothing> clothingList = clothingFactory.create(productsCreatedEvent.getProducts());
         clothingService.create(clothingList);
     }
 }

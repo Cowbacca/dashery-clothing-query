@@ -5,8 +5,8 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.ui.ExtendedModelMap;
-import uk.co.dashery.clothing.ClothingController;
 import uk.co.dashery.productfeed.csv.AffiliateWindowProductCsvParser;
 import uk.co.dashery.productfeed.csv.DasheryProductCsvParser;
 
@@ -34,7 +34,7 @@ public class ProductFeedControllerTest {
 
 
     @Mock
-    private ClothingController clothingController;
+    private ApplicationEventPublisher applicationEventPublisher;
 
     @Before
     public void setUp() {
@@ -45,7 +45,9 @@ public class ProductFeedControllerTest {
     public void testIngestsProducts() throws Exception {
         productFeedController.ingestProducts(new ProductFeedForm(generateCsvFile("test.csv")));
 
-        verify(clothingController).createFrom(expectedProducts());
+        ProductsCreatedEvent expectedProductsCreatedEvent = new ProductsCreatedEvent
+                (expectedProducts());
+        verify(applicationEventPublisher).publishEvent(expectedProductsCreatedEvent);
     }
 
     @Test
