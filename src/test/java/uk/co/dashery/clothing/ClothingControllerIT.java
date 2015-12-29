@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.co.dashery.DasheryClothingQueryIntegrationTest;
 import uk.co.dashery.productfeed.Product;
+import uk.co.dashery.productfeed.ProductsCreatedEvent;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -65,15 +66,20 @@ public class ClothingControllerIT {
         Product product = givenAProduct();
         product.setPrice(1);
 
-        clothingController.createFrom(Lists.newArrayList(product));
+        clothingController.handleProductsCreated(getProductsCreatedEvent(product));
 
         MatcherAssert.assertThat(firstClothingWithTagNamedSome().getPrice(), CoreMatchers.is(1));
 
         product.setPrice(2);
 
-        clothingController.createFrom(Lists.newArrayList(product));
+        clothingController.handleProductsCreated(getProductsCreatedEvent(product));
 
         MatcherAssert.assertThat(firstClothingWithTagNamedSome().getPrice(), CoreMatchers.is(2));
+    }
+
+    private ProductsCreatedEvent getProductsCreatedEvent(Product product) {
+        return new ProductsCreatedEvent(Lists.newArrayList
+                (product));
     }
 
     private Product givenAProduct() {
