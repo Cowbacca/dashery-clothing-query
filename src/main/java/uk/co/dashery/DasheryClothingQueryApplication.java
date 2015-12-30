@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.client.RestTemplate;
-import uk.co.dashery.clothing.rabbitmq.RabbitMqConfig;
+import uk.co.dashery.rabbitmq.RabbitMqConfig;
 
 @SpringBootApplication
 @Import(RabbitMqConfig.class)

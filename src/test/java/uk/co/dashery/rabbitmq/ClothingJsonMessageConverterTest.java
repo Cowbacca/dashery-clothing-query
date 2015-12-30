@@ -1,4 +1,4 @@
-package uk.co.dashery.clothing.rabbitmq;
+package uk.co.dashery.rabbitmq;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
