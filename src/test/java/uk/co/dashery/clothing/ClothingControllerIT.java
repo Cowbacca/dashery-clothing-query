@@ -1,6 +1,9 @@
 package uk.co.dashery.clothing;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.co.dashery.DasheryClothingQueryIntegrationTest;
 
 import javax.inject.Inject;
+import java.io.IOException;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
@@ -56,4 +60,30 @@ public class ClothingControllerIT {
                 (bananaAppleClothing)));
     }
 
+    @Test
+    public void testUpdatesClothingRatherThanDuplicates() throws IOException {
+        Clothing clothing = givenAClothing();
+        clothing.setPrice(1);
+
+        clothingController.processNewClothing(Lists.newArrayList(clothing));
+
+        MatcherAssert.assertThat(firstClothingWithTagNamedSome().getPrice(), CoreMatchers.is(1));
+
+        clothing.setPrice(2);
+
+        clothingController.processNewClothing(Lists.newArrayList(clothing));
+
+        MatcherAssert.assertThat(firstClothingWithTagNamedSome().getPrice(), CoreMatchers.is(2));
+    }
+
+    private Clothing givenAClothing() {
+        Clothing product = new Clothing();
+        product.setId("id");
+        product.setTags(Sets.newHashSet("Some"));
+        return product;
+    }
+
+    private Clothing firstClothingWithTagNamedSome() {
+        return clothingController.clothing("Some").get(0);
+    }
 }
