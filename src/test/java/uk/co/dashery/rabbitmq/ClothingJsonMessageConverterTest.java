@@ -38,14 +38,14 @@ public class ClothingJsonMessageConverterTest {
                 "{\"id\":\"id123\"," +
                 "\"merchant\":\"A Test Brand\"," +
                 "\"name\":\"Test Item\"," +
-                "\"description\":\"Some description or other.\"," +
+                "\"description\":\"<p>Some description or other.</p>\"," +
                 "\"price\":10000," +
                 "\"link\":\"a_link.html\"," +
                 "\"imageLink\":\"image.jpg\"}," +
                 "{\"id\":\"id456\"," +
                 "\"merchant\":\"Another Day\"," +
                 "\"name\":\"Another Dollar\"," +
-                "\"description\":\"A different description.\"" +
+                "\"description\":\"&lt;p&gt;A different description.&lt;/p&gt;\"" +
                 ",\"price\":200," +
                 "\"link\":\"different_link\"," +
                 "\"imageLink\":\"image2.jpg\"}" +
@@ -55,9 +55,9 @@ public class ClothingJsonMessageConverterTest {
 
     private ArrayList<Clothing> expectedClothing() {
         Clothing firstClothing = new Clothing("id123", "A Test Brand", "Test Item", 10000,
-                "a_link.html", "image.jpg", Sets.newHashSet("description", "Some", "or", "other."));
+                "a_link.html", "image.jpg", Sets.newHashSet("description", "some", "or", "other"));
         Clothing secondClothing = new Clothing("id456", "Another Day", "Another Dollar", 200,
-                "different_link", "image2.jpg", Sets.newHashSet("A", "different", "description."));
+                "different_link", "image2.jpg", Sets.newHashSet("a", "different", "description"));
         return Lists.newArrayList(firstClothing, secondClothing);
     }
 }
