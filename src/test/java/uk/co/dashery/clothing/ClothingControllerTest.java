@@ -1,14 +1,17 @@
 package uk.co.dashery.clothing;
 
+import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static uk.co.dashery.ClothingTestUtils.createClothing;
@@ -33,5 +36,13 @@ public class ClothingControllerTest {
         when(mockClothingService.search(SEARCH_STRING)).thenReturn(clothing);
 
         assertThat(clothingController.clothing(SEARCH_STRING), is(clothing));
+    }
+
+    @Test
+    public void testProcessesNewClothing() {
+        ArrayList<Clothing> newClothing = Lists.newArrayList(new Clothing("id123"));
+        clothingController.processNewClothing(newClothing);
+
+        verify(mockClothingService).create(newClothing);
     }
 }

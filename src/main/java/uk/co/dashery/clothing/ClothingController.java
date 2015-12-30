@@ -1,5 +1,6 @@
 package uk.co.dashery.clothing;
 
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.context.event.EventListener;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,5 +29,10 @@ public class ClothingController {
     public void handleProductsCreated(ProductsCreatedEvent productsCreatedEvent) {
         List<Clothing> clothingList = clothingFactory.create(productsCreatedEvent.getProducts());
         clothingService.create(clothingList);
+    }
+
+    @RabbitListener(queues = "products")
+    public void processNewClothing(List<Clothing> clothing) {
+        clothingService.create(clothing);
     }
 }
