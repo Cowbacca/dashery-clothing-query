@@ -14,8 +14,6 @@ public class ClothingController {
 
     @Inject
     private ClothingService clothingService;
-    @Inject
-    private ClothingFactory clothingFactory;
 
     @CrossOrigin
     @RequestMapping

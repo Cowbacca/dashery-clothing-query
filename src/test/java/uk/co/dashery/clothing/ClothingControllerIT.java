@@ -1,8 +1,6 @@
 package uk.co.dashery.clothing;
 
 import com.google.common.collect.Lists;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,11 +8,8 @@ import org.junit.runner.RunWith;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.co.dashery.DasheryClothingQueryIntegrationTest;
-import uk.co.dashery.productfeed.Product;
-import uk.co.dashery.productfeed.ProductsCreatedEvent;
 
 import javax.inject.Inject;
-import java.io.IOException;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
@@ -61,35 +56,4 @@ public class ClothingControllerIT {
                 (bananaAppleClothing)));
     }
 
-    @Test
-    public void testUpdatesClothingRatherThanDuplicates() throws IOException {
-        Product product = givenAProduct();
-        product.setPrice(1);
-
-        clothingController.handleProductsCreated(getProductsCreatedEvent(product));
-
-        MatcherAssert.assertThat(firstClothingWithTagNamedSome().getPrice(), CoreMatchers.is(1));
-
-        product.setPrice(2);
-
-        clothingController.handleProductsCreated(getProductsCreatedEvent(product));
-
-        MatcherAssert.assertThat(firstClothingWithTagNamedSome().getPrice(), CoreMatchers.is(2));
-    }
-
-    private ProductsCreatedEvent getProductsCreatedEvent(Product product) {
-        return new ProductsCreatedEvent(Lists.newArrayList
-                (product));
-    }
-
-    private Product givenAProduct() {
-        Product product = new Product();
-        product.setId("id");
-        product.setDescription("Some description.");
-        return product;
-    }
-
-    private Clothing firstClothingWithTagNamedSome() {
-        return clothingController.clothing("Some").get(0);
-    }
 }
