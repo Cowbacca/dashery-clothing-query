@@ -34,7 +34,9 @@ public class RabbitMqConfig {
 
     @Bean
     public MessageConverter messageConverter() {
-        return new Jackson2JsonMessageConverter();
+        Jackson2JsonMessageConverter messageConverter = new Jackson2JsonMessageConverter();
+        messageConverter.setJavaTypeMapper(new ClothingJavaTypeMapper());
+        return messageConverter;
     }
 
     @Bean
@@ -45,4 +47,5 @@ public class RabbitMqConfig {
         factory.setMessageConverter(messageConverter());
         return factory;
     }
+
 }
