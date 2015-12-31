@@ -5,21 +5,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.CharMatcher;
-import com.google.common.collect.Sets;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.parser.Parser;
 import org.springframework.data.annotation.Id;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Clothing {
 
@@ -34,8 +30,24 @@ public class Clothing {
     private String imageLink;
     private Set<String> tags;
 
+    public Clothing() {
+        this(null, null, null, 0, null, null, null);
+    }
     public Clothing(String id) {
         this(id, null, null, 0, null, null, null);
+    }
+
+    public Clothing(String id, String brand, String name, int price, String link, String imageLink,
+                    String searchableText) {
+        this.tags = new HashSet<>();
+
+        setId(id);
+        setBrand(brand);
+        setName(name);
+        setPrice(price);
+        setLink(link);
+        setImageLink(imageLink);
+        addNewTags(searchableText);
     }
 
     @JsonIgnore
@@ -58,6 +70,11 @@ public class Clothing {
         this.brand = brand;
     }
 
+    public void setName(String name) {
+        this.name = name;
+        addNewTags(name);
+    }
+
     @JsonIgnore
     public Set<String> getTags() {
         return tags;
@@ -65,16 +82,19 @@ public class Clothing {
 
     @JsonProperty("description")
     public void setTags(String description) {
-        if (description != null) {
-            String unescapedDescription = Parser.unescapeEntities(description, true);
-            String parsedHtml = Jsoup.parse(unescapedDescription).text();
-            String lowerCaseDescription = parsedHtml.toLowerCase();
-            String[] tags = lowerCaseDescription.split(" ");
-            this.tags =  Arrays.stream(tags)
+        addNewTags(description);
+    }
+
+    private void addNewTags(String text) {
+        if (text != null) {
+            String unescapedText = Parser.unescapeEntities(text, true);
+            String parsedHtml = Jsoup.parse(unescapedText).text();
+            String lowerCaseParsedHtml = parsedHtml.toLowerCase();
+            String[] tags = lowerCaseParsedHtml.split(" ");
+            Set<String> newTags = Arrays.stream(tags)
                     .map(tag -> PUNCTUATION_MATCHER.trimFrom(tag)).collect
                             (Collectors.toSet());
-        } else {
-            this.tags = Sets.newHashSet();
+            this.tags.addAll(newTags);
         }
     }
 }

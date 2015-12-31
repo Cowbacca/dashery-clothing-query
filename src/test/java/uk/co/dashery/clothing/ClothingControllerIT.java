@@ -75,6 +75,18 @@ public class ClothingControllerIT {
         MatcherAssert.assertThat(firstClothingWithTagNamedSome().getPrice(), CoreMatchers.is(2));
     }
 
+    @Test
+    public void testFindsClothingWithSearchTermInName() {
+        Clothing clothing = new Clothing("someid");
+        clothing.setName("Grey Wool Trousers");
+        List<Clothing> expectedClothing = Lists.newArrayList(clothing);
+
+        clothingController.processNewClothing(expectedClothing);
+
+        assertThat(clothingController.clothing("grey"), is(expectedClothing));
+
+    }
+
     private Clothing givenAClothing() {
         Clothing product = new Clothing();
         product.setId("id");
