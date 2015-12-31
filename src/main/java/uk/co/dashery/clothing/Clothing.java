@@ -6,24 +6,23 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.CharMatcher;
 import com.google.common.collect.Sets;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.parser.Parser;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
+import uk.co.dashery.clothing.tag.Tag;
 
-import java.util.Arrays;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Clothing {
 
     public static final CharMatcher PUNCTUATION_MATCHER = CharMatcher.anyOf(",. \n\t\\\"'][#*:()");
+    public static final int NAME_VALUE_MULTIPLIER = 2;
+    public static final int SEARCHABLE_TEXT_VALUE_MULTIPLIER = 1;
 
     @Id
     private String id;
@@ -32,10 +31,37 @@ public class Clothing {
     private int price;
     private String link;
     private String imageLink;
-    private Set<String> tags;
+    private Set<Tag> tags;
 
+    public Clothing() {
+        this(null, null, null, 0, null, null, (String) null);
+    }
     public Clothing(String id) {
-        this(id, null, null, 0, null, null, null);
+        this(id, null, null, 0, null, null, (String) null);
+    }
+    public Clothing(String id, String brand, String name, int price, String link, String imageLink,
+                    String searchableText) {
+        this.tags = new HashSet<>();
+
+        setId(id);
+        setBrand(brand);
+        setName(name);
+        setPrice(price);
+        setLink(link);
+        setImageLink(imageLink);
+        setSearchableText(searchableText);
+    }
+
+    @PersistenceConstructor
+    protected Clothing(String id, String brand, String name, int price, String link, String
+            imageLink, Set<Tag> tags) {
+        this.id = id;
+        this.brand = brand;
+        this.name = name;
+        this.price = price;
+        this.link = link;
+        this.imageLink = imageLink;
+        this.tags = tags;
     }
 
     @JsonIgnore
@@ -58,23 +84,75 @@ public class Clothing {
         this.brand = brand;
     }
 
+    public void setName(String name) {
+        this.name = name;
+        addNewTags(name, NAME_VALUE_MULTIPLIER);
+    }
+
     @JsonIgnore
-    public Set<String> getTags() {
+    public Set<Tag> getTags() {
         return tags;
     }
 
     @JsonProperty("description")
-    public void setTags(String description) {
-        if (description != null) {
-            String unescapedDescription = Parser.unescapeEntities(description, true);
-            String parsedHtml = Jsoup.parse(unescapedDescription).text();
-            String lowerCaseDescription = parsedHtml.toLowerCase();
-            String[] tags = lowerCaseDescription.split(" ");
-            this.tags =  Arrays.stream(tags)
-                    .map(tag -> PUNCTUATION_MATCHER.trimFrom(tag)).collect
-                            (Collectors.toSet());
-        } else {
-            this.tags = Sets.newHashSet();
+    public void setSearchableText(String description) {
+        addNewTags(description, SEARCHABLE_TEXT_VALUE_MULTIPLIER);
+    }
+
+    private void addNewTags(String text, int multiplier) {
+        if (text != null) {
+            List<String> words = getWordsFromText(text);
+            HashSet<String> wordSet = Sets.newHashSet(words);
+            wordSet.forEach(word -> addTag(word, words, multiplier));
         }
+    }
+
+    private List<String> getWordsFromText(String text) {
+        String unescapedText = Parser.unescapeEntities(text, true);
+        String parsedHtml = Jsoup.parse(unescapedText).text();
+        String lowerCaseParsedHtml = parsedHtml.toLowerCase();
+        String[] untrimmedWords = lowerCaseParsedHtml.split(" ");
+        return Arrays.stream(untrimmedWords)
+                .map(untrimmedWord -> PUNCTUATION_MATCHER.trimFrom(untrimmedWord))
+                .collect(Collectors.toList());
+    }
+
+    private void addTag(String value, List<String> values, int multiplier) {
+        int occurrences = Collections.frequency(values, value);
+        int score = occurrences * multiplier;
+
+        addScoreToTag(value, score);
+    }
+
+    private void addScoreToTag(String value, int score) {
+        Optional<Tag> existingTag = this.tags.stream()
+                .filter(tag -> tag.getValue().equals(value))
+                .findFirst();
+
+        if (existingTag.isPresent()) {
+            existingTag.get().addToScore(score);
+        } else {
+            this.tags.add(new Tag(value, score));
+        }
+    }
+
+    public int compareRelevance(Clothing otherClothing, String... tags) {
+        int relevance = getRelevance(tags);
+        int otherRelevance = otherClothing.getRelevance(tags);
+
+        if (relevance == otherRelevance) {
+            return 0;
+        } else if (relevance < otherRelevance) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
+
+    private int getRelevance(String... tags) {
+        return this.tags.stream()
+                .filter(tag -> Arrays.asList(tags).contains(tag.getValue()))
+                .mapToInt(Tag::getScore)
+                .sum();
     }
 }

@@ -1,5 +1,6 @@
 package uk.co.dashery.clothing;
 
+import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -51,5 +52,20 @@ public class ClothingServiceTest {
         verify(mockClothingRepository).save(clothing);
         verify(tokenService).createFromClothing(clothing);
 
+    }
+
+    @Test
+    public void testSortsClothingWithTagInTitleHigher() {
+        Clothing clothingWithTagInName = new Clothing("id1");
+        clothingWithTagInName.setName("test");
+
+        Clothing clothingWithTagInSearchableText = new Clothing("id2");
+        clothingWithTagInSearchableText.setSearchableText("test");
+
+        when(mockClothingRepository.findByAllTagsIn("test")).thenReturn(Lists.newArrayList
+                (clothingWithTagInSearchableText, clothingWithTagInName));
+
+        assertThat(clothingService.search("test"), is(Lists.newArrayList(clothingWithTagInName,
+                clothingWithTagInSearchableText)));
     }
 }

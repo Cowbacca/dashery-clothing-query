@@ -17,7 +17,9 @@ public class ClothingService {
 
     public List<Clothing> search(String search) {
         String[] tags = search.split(SEPARATOR);
-        return clothingRepository.findByAllTagsIn(tags);
+        List<Clothing> clothingList = clothingRepository.findByAllTagsIn(tags);
+        clothingList.sort((o1, o2) -> -o1.compareRelevance(o2, tags));
+        return clothingList;
     }
 
     public void create(List<Clothing> clothing) {

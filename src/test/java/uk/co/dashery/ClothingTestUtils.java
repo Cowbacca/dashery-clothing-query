@@ -1,6 +1,5 @@
 package uk.co.dashery;
 
-import com.google.common.collect.Sets;
 import uk.co.dashery.clothing.Clothing;
 
 import java.util.ArrayList;
@@ -23,15 +22,15 @@ public class ClothingTestUtils {
         clothing.setBrand(brand);
         clothing.setName(name);
         clothing.setPrice(price);
-        clothing.setTags(String.join(" ", tags));
+        clothing.setSearchableText(String.join(" ", tags));
         return clothing;
     }
 
     public static Clothing[] expectedClothing() {
         Clothing firstClothing = new Clothing("id123", "A Test Brand", "Test Item", 10000,
-                "a_link.html", "image.jpg", Sets.newHashSet("description", "some", "or", "other"));
+                "a_link.html", "image.jpg", "Some description or other");
         Clothing secondClothing = new Clothing("id456", "Another Day", "Another Dollar", 200,
-                "different_link", "image2.jpg", Sets.newHashSet("a", "different", "description"));
+                "different_link", "image2.jpg", "A different description");
         return new Clothing[]{firstClothing, secondClothing};
     }
 
