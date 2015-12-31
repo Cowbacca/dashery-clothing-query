@@ -9,6 +9,8 @@ import lombok.Data;
 import org.jsoup.Jsoup;
 import org.jsoup.parser.Parser;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
+import uk.co.dashery.clothing.tag.Tag;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -28,15 +30,14 @@ public class Clothing {
     private int price;
     private String link;
     private String imageLink;
-    private Set<String> tags;
+    private Set<Tag> tags;
 
     public Clothing() {
-        this(null, null, null, 0, null, null, null);
+        this(null, null, null, 0, null, null, (String) null);
     }
     public Clothing(String id) {
-        this(id, null, null, 0, null, null, null);
+        this(id, null, null, 0, null, null, (String) null);
     }
-
     public Clothing(String id, String brand, String name, int price, String link, String imageLink,
                     String searchableText) {
         this.tags = new HashSet<>();
@@ -48,6 +49,18 @@ public class Clothing {
         setLink(link);
         setImageLink(imageLink);
         addNewTags(searchableText);
+    }
+
+    @PersistenceConstructor
+    protected Clothing(String id, String brand, String name, int price, String link, String
+            imageLink, Set<Tag> tags) {
+        this.id = id;
+        this.brand = brand;
+        this.name = name;
+        this.price = price;
+        this.link = link;
+        this.imageLink = imageLink;
+        this.tags = tags;
     }
 
     @JsonIgnore
@@ -76,12 +89,12 @@ public class Clothing {
     }
 
     @JsonIgnore
-    public Set<String> getTags() {
+    public Set<Tag> getTags() {
         return tags;
     }
 
     @JsonProperty("description")
-    public void setTags(String description) {
+    public void setSearchableText(String description) {
         addNewTags(description);
     }
 
@@ -91,8 +104,8 @@ public class Clothing {
             String parsedHtml = Jsoup.parse(unescapedText).text();
             String lowerCaseParsedHtml = parsedHtml.toLowerCase();
             String[] tags = lowerCaseParsedHtml.split(" ");
-            Set<String> newTags = Arrays.stream(tags)
-                    .map(tag -> PUNCTUATION_MATCHER.trimFrom(tag)).collect
+            Set<Tag> newTags = Arrays.stream(tags)
+                    .map(tag -> new Tag(PUNCTUATION_MATCHER.trimFrom(tag))).collect
                             (Collectors.toSet());
             this.tags.addAll(newTags);
         }

@@ -22,7 +22,7 @@ public class ClothingTestUtils {
         clothing.setBrand(brand);
         clothing.setName(name);
         clothing.setPrice(price);
-        clothing.setTags(String.join(" ", tags));
+        clothing.setSearchableText(String.join(" ", tags));
         return clothing;
     }
 

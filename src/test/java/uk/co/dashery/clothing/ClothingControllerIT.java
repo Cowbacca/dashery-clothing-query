@@ -90,7 +90,7 @@ public class ClothingControllerIT {
     private Clothing givenAClothing() {
         Clothing product = new Clothing();
         product.setId("id");
-        product.setTags("Some");
+        product.setSearchableText("Some");
         return product;
     }
 
