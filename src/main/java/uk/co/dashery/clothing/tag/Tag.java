@@ -11,4 +11,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class Tag {
     private String value;
+    private int score;
+
+    public void addToScore(int toAdd) {
+        score += toAdd;
+    }
 }

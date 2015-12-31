@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.CharMatcher;
+import com.google.common.collect.Sets;
 import lombok.Data;
 import org.jsoup.Jsoup;
 import org.jsoup.parser.Parser;
@@ -12,9 +13,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import uk.co.dashery.clothing.tag.Tag;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Data
@@ -22,6 +21,8 @@ import java.util.stream.Collectors;
 public class Clothing {
 
     public static final CharMatcher PUNCTUATION_MATCHER = CharMatcher.anyOf(",. \n\t\\\"'][#*:()");
+    public static final int NAME_VALUE_MULTIPLIER = 2;
+    public static final int SEARCHABLE_TEXT_VALUE_MULTIPLIER = 1;
 
     @Id
     private String id;
@@ -48,7 +49,7 @@ public class Clothing {
         setPrice(price);
         setLink(link);
         setImageLink(imageLink);
-        addNewTags(searchableText);
+        setSearchableText(searchableText);
     }
 
     @PersistenceConstructor
@@ -85,7 +86,7 @@ public class Clothing {
 
     public void setName(String name) {
         this.name = name;
-        addNewTags(name);
+        addNewTags(name, NAME_VALUE_MULTIPLIER);
     }
 
     @JsonIgnore
@@ -95,19 +96,63 @@ public class Clothing {
 
     @JsonProperty("description")
     public void setSearchableText(String description) {
-        addNewTags(description);
+        addNewTags(description, SEARCHABLE_TEXT_VALUE_MULTIPLIER);
     }
 
-    private void addNewTags(String text) {
+    private void addNewTags(String text, int multiplier) {
         if (text != null) {
-            String unescapedText = Parser.unescapeEntities(text, true);
-            String parsedHtml = Jsoup.parse(unescapedText).text();
-            String lowerCaseParsedHtml = parsedHtml.toLowerCase();
-            String[] tags = lowerCaseParsedHtml.split(" ");
-            Set<Tag> newTags = Arrays.stream(tags)
-                    .map(tag -> new Tag(PUNCTUATION_MATCHER.trimFrom(tag))).collect
-                            (Collectors.toSet());
-            this.tags.addAll(newTags);
+            List<String> words = getWordsFromText(text);
+            HashSet<String> wordSet = Sets.newHashSet(words);
+            wordSet.forEach(word -> addTag(word, words, multiplier));
         }
+    }
+
+    private List<String> getWordsFromText(String text) {
+        String unescapedText = Parser.unescapeEntities(text, true);
+        String parsedHtml = Jsoup.parse(unescapedText).text();
+        String lowerCaseParsedHtml = parsedHtml.toLowerCase();
+        String[] untrimmedWords = lowerCaseParsedHtml.split(" ");
+        return Arrays.stream(untrimmedWords)
+                .map(untrimmedWord -> PUNCTUATION_MATCHER.trimFrom(untrimmedWord))
+                .collect(Collectors.toList());
+    }
+
+    private void addTag(String value, List<String> values, int multiplier) {
+        int occurrences = Collections.frequency(values, value);
+        int score = occurrences * multiplier;
+
+        addScoreToTag(value, score);
+    }
+
+    private void addScoreToTag(String value, int score) {
+        Optional<Tag> existingTag = this.tags.stream()
+                .filter(tag -> tag.getValue().equals(value))
+                .findFirst();
+
+        if (existingTag.isPresent()) {
+            existingTag.get().addToScore(score);
+        } else {
+            this.tags.add(new Tag(value, score));
+        }
+    }
+
+    public int compareRelevance(Clothing otherClothing, String... tags) {
+        int relevance = getRelevance(tags);
+        int otherRelevance = otherClothing.getRelevance(tags);
+
+        if (relevance == otherRelevance) {
+            return 0;
+        } else if (relevance < otherRelevance) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
+
+    private int getRelevance(String... tags) {
+        return this.tags.stream()
+                .filter(tag -> Arrays.asList(tags).contains(tag.getValue()))
+                .mapToInt(Tag::getScore)
+                .sum();
     }
 }
