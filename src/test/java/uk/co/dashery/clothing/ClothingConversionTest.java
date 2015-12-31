@@ -1,36 +1,36 @@
-package uk.co.dashery.rabbitmq;
+package uk.co.dashery.clothing;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
-import uk.co.dashery.clothing.Clothing;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.amqp.support.converter.DefaultClassMapper;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+import static uk.co.dashery.ClothingTestUtils.expectedClothing;
 
-public class ClothingJsonMessageConverterTest {
+public class ClothingConversionTest {
 
-    private ClothingJsonMessageConverter clothingJsonMessageConverter;
+    private Jackson2JsonMessageConverter messageConverter;
 
     @Before
     public void setUp() {
-        clothingJsonMessageConverter = new ClothingJsonMessageConverter();
+        messageConverter = new Jackson2JsonMessageConverter();
+        DefaultClassMapper classMapper = new DefaultClassMapper();
+        classMapper.setDefaultType(Clothing[].class);
+        messageConverter.setClassMapper(classMapper);
     }
 
     @Test
     public void testConvertsFromJsonMessage() throws Exception {
         Message message = givenAMessageWithTwoJsonProducts();
 
-        List<Clothing> convertedClothing = clothingJsonMessageConverter.fromMessage(message);
+        Clothing[] convertedClothing = (Clothing[]) messageConverter.fromMessage(message);
 
-        ArrayList<Clothing> expectedClothing = expectedClothing();
-        assertThat(convertedClothing, is(expectedClothing));
+        assertThat(convertedClothing, is(expectedClothing()));
     }
 
     private Message givenAMessageWithTwoJsonProducts() {
@@ -50,14 +50,12 @@ public class ClothingJsonMessageConverterTest {
                 "\"link\":\"different_link\"," +
                 "\"imageLink\":\"image2.jpg\"}" +
                 "]";
-        return new Message(productsJson.getBytes(), new MessageProperties());
+        return new Message(productsJson.getBytes(), getMessageProperties());
     }
 
-    private ArrayList<Clothing> expectedClothing() {
-        Clothing firstClothing = new Clothing("id123", "A Test Brand", "Test Item", 10000,
-                "a_link.html", "image.jpg", Sets.newHashSet("description", "some", "or", "other"));
-        Clothing secondClothing = new Clothing("id456", "Another Day", "Another Dollar", 200,
-                "different_link", "image2.jpg", Sets.newHashSet("a", "different", "description"));
-        return Lists.newArrayList(firstClothing, secondClothing);
+    private MessageProperties getMessageProperties() {
+        MessageProperties messageProperties = new MessageProperties();
+        messageProperties.setContentType("application/json");
+        return messageProperties;
     }
 }

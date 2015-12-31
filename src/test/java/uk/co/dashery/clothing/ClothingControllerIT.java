@@ -1,7 +1,6 @@
 package uk.co.dashery.clothing;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.After;
@@ -51,12 +50,12 @@ public class ClothingControllerIT {
         List<Clothing> clothingWithBananaTag = Lists.newArrayList(bananaAppleClothing,
                 justBananaClothing);
 
-        assertThat(clothingController.clothing("Banana"), is(clothingWithBananaTag));
+        assertThat(clothingController.clothing("banana"), is(clothingWithBananaTag));
     }
 
     @Test
     public void testSearchForClothingWithTwoTags() {
-        assertThat(clothingController.clothing("Banana,Apple"), is(Lists.newArrayList
+        assertThat(clothingController.clothing("banana,apple"), is(Lists.newArrayList
                 (bananaAppleClothing)));
     }
 
@@ -79,11 +78,11 @@ public class ClothingControllerIT {
     private Clothing givenAClothing() {
         Clothing product = new Clothing();
         product.setId("id");
-        product.setTags(Sets.newHashSet("Some"));
+        product.setTags("Some");
         return product;
     }
 
     private Clothing firstClothingWithTagNamedSome() {
-        return clothingController.clothing("Some").get(0);
+        return clothingController.clothing("some").get(0);
     }
 }
