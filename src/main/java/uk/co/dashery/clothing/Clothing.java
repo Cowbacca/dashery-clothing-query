@@ -26,7 +26,6 @@ public class Clothing {
     public static final CharMatcher PUNCTUATION_MATCHER = CharMatcher.anyOf(",. \n\t\\\"'][#*:()");
 
     @Id
-    @JsonIgnore
     private String id;
     private String brand;
     private String name;
