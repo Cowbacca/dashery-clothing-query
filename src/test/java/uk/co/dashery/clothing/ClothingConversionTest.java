@@ -1,7 +1,6 @@
 package uk.co.dashery.clothing;
 
 
-import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.amqp.core.Message;
@@ -11,6 +10,7 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+import static uk.co.dashery.ClothingTestUtils.expectedClothing;
 
 public class ClothingConversionTest {
 
@@ -57,13 +57,5 @@ public class ClothingConversionTest {
         MessageProperties messageProperties = new MessageProperties();
         messageProperties.setContentType("application/json");
         return messageProperties;
-    }
-
-    private Clothing[] expectedClothing() {
-        Clothing firstClothing = new Clothing("id123", "A Test Brand", "Test Item", 10000,
-                "a_link.html", "image.jpg", Sets.newHashSet("description", "some", "or", "other"));
-        Clothing secondClothing = new Clothing("id456", "Another Day", "Another Dollar", 200,
-                "different_link", "image2.jpg", Sets.newHashSet("a", "different", "description"));
-        return new Clothing[]{firstClothing, secondClothing};
     }
 }

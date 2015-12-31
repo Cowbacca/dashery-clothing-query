@@ -27,4 +27,12 @@ public class ClothingTestUtils {
         return clothing;
     }
 
+    public static Clothing[] expectedClothing() {
+        Clothing firstClothing = new Clothing("id123", "A Test Brand", "Test Item", 10000,
+                "a_link.html", "image.jpg", Sets.newHashSet("description", "some", "or", "other"));
+        Clothing secondClothing = new Clothing("id456", "Another Day", "Another Dollar", 200,
+                "different_link", "image2.jpg", Sets.newHashSet("a", "different", "description"));
+        return new Clothing[]{firstClothing, secondClothing};
+    }
+
 }
