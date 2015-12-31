@@ -28,7 +28,7 @@ public class ClothingTest {
 
     private Set<Tag> getTags(String... values) {
         return Arrays.stream(values)
-                .map(value -> new Tag(value, Clothing.NAME_VALUE_MULTIPLIER))
+                .map(value -> new Tag(value, Clothing.NAME_SCORE_MULTIPLIER))
                 .collect(Collectors.toSet());
     }
 
@@ -82,7 +82,7 @@ public class ClothingTest {
         Clothing clothing = new Clothing();
         clothing.setSearchableText("test test.");
 
-        Tag expectedTag = new Tag("test", 2 * Clothing.SEARCHABLE_TEXT_VALUE_MULTIPLIER);
+        Tag expectedTag = new Tag("test", 2 * Clothing.SEARCHABLE_TEXT_SCORE_MULTIPLIER);
 
         assertThat(clothing.getTags(), is(Sets.newHashSet(expectedTag)));
     }

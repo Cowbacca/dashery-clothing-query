@@ -23,8 +23,8 @@ import java.util.stream.Collectors;
 public class Clothing {
 
     public static final CharMatcher PUNCTUATION_MATCHER = CharMatcher.anyOf(",. \n\t\\\"'][#*:()");
-    public static final int NAME_VALUE_MULTIPLIER = 10;
-    public static final int SEARCHABLE_TEXT_VALUE_MULTIPLIER = 1;
+    public static final int NAME_SCORE_MULTIPLIER = 10;
+    public static final int SEARCHABLE_TEXT_SCORE_MULTIPLIER = 1;
 
     @Id
     private String id;
@@ -88,7 +88,7 @@ public class Clothing {
 
     public void setName(String name) {
         this.name = name;
-        addNewTags(name, NAME_VALUE_MULTIPLIER);
+        addNewTags(name, NAME_SCORE_MULTIPLIER);
     }
 
     @JsonIgnore
@@ -98,7 +98,7 @@ public class Clothing {
 
     @JsonProperty("description")
     public void setSearchableText(String description) {
-        addNewTags(description, SEARCHABLE_TEXT_VALUE_MULTIPLIER);
+        addNewTags(description, SEARCHABLE_TEXT_SCORE_MULTIPLIER);
     }
 
     private void addNewTags(String text, int multiplier) {
