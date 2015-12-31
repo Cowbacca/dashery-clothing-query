@@ -60,7 +60,7 @@ public class Clothing {
     }
 
     @JsonProperty("description")
-    public void setDescription(String description) {
+    public void setTags(String description) {
         if (description != null) {
             String unescapedDescription = Parser.unescapeEntities(description, true);
             String parsedHtml = Jsoup.parse(unescapedDescription).text();
