@@ -58,6 +58,11 @@ public class Clothing {
         this.brand = brand;
     }
 
+    @JsonIgnore
+    public Set<String> getTags() {
+        return tags;
+    }
+
     @JsonProperty("description")
     public void setTags(String description) {
         if (description != null) {

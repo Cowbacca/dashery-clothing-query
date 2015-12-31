@@ -23,7 +23,7 @@ public class ClothingTestUtils {
         clothing.setBrand(brand);
         clothing.setName(name);
         clothing.setPrice(price);
-        clothing.setTags(Sets.newHashSet(tags));
+        clothing.setTags(String.join(" ", tags));
         return clothing;
     }
 
