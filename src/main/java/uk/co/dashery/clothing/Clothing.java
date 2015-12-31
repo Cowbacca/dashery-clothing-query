@@ -11,6 +11,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.parser.Parser;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
 import uk.co.dashery.clothing.tag.Tag;
 
 import java.util.*;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Document
 public class Clothing {
 
     public static final CharMatcher PUNCTUATION_MATCHER = CharMatcher.anyOf(",. \n\t\\\"'][#*:()");
